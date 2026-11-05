@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-    <title>Cyber 2048 | 霓虹賽博朋克 2048 手機網頁小遊戲 (Neon Cyber 2048 Puzzle Game)</title>
-    <meta name="description" content="遊玩免費的 Cyber 2048 霓虹賽博朋克風格益智遊戲！支援手機觸控滑動、流暢動畫、Undo 復原功能，免下載即開即玩。Play the neon cyber-themed 2048 puzzle game online with smooth animations, mobile touch support, and undo features!">
-    <meta name="keywords" content="2048, Cyber 2048, 2048 遊戲, 賽博朋克小遊戲, HTML5 網頁遊戲, 線上益智遊戲, mobile 2048 puzzle game, cyberpunk game">
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Mini Game 2048</title>
+    <title>Cyber 2048 | 霓虹賽博朋克 2048 手機網頁小遊戲</title>
+    <meta name="description" content="遊玩免費的 Cyber 2048 霓虹賽博朋克風格益智遊戲！支援手機觸控滑動、流暢動畫、個人歷史紀錄與全球排行榜。">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK (Compat) 用於全球排行榜 -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
     <style>
         body {
             font-family: 'Outfit', sans-serif;
@@ -26,8 +27,8 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 12px;
-            gap: 12px;
+            padding: 10px;
+            gap: 10px;
         }
 
         .glass-panel {
@@ -36,11 +37,10 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* 根據手機高度動態縮放棋盤，確保不會被切掉 */
         .board-wrapper {
             position: relative;
             width: 100%;
-            max-width: min(400px, 66dvh);
+            max-width: min(380px, 60dvh);
             aspect-ratio: 1;
         }
 
@@ -73,20 +73,14 @@
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.75rem;
+            font-size: 1.6rem;
             transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             z-index: 10;
         }
 
-        .tile-new {
-            animation: appear 0.18s ease-out forwards;
-        }
-
-        .tile-merged {
-            animation: pop 0.18s ease-in-out forwards;
-            z-index: 20;
-        }
+        .tile-new { animation: appear 0.18s ease-out forwards; }
+        .tile-merged { animation: pop 0.18s ease-in-out forwards; z-index: 20; }
 
         @keyframes appear {
             0% { opacity: 0; transform: var(--tile-pos) scale(0); }
@@ -99,55 +93,52 @@
             100% { transform: var(--tile-pos) scale(1); }
         }
 
-        /* Tile Neon Color Schemes */
+        /* Tile Colors */
         .tile-2    { background: linear-gradient(135deg, #1e293b, #334155); color: #f8fafc; border: 1px solid #475569; }
         .tile-4    { background: linear-gradient(135deg, #0f4c81, #1e3a8a); color: #38bdf8; border: 1px solid #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
         .tile-8    { background: linear-gradient(135deg, #1e1b4b, #312e81); color: #818cf8; border: 1px solid #6366f1; box-shadow: 0 0 12px rgba(99, 102, 241, 0.4); }
         .tile-16   { background: linear-gradient(135deg, #4c1d95, #581c87); color: #c084fc; border: 1px solid #c084fc; box-shadow: 0 0 14px rgba(192, 132, 252, 0.4); }
         .tile-32   { background: linear-gradient(135deg, #831843, #701a75); color: #f472b6; border: 1px solid #f472b6; box-shadow: 0 0 16px rgba(244, 114, 182, 0.5); }
         .tile-64   { background: linear-gradient(135deg, #9f1239, #881337); color: #fb7185; border: 1px solid #fb7185; box-shadow: 0 0 18px rgba(251, 113, 133, 0.5); }
-        .tile-128  { background: linear-gradient(135deg, #c2410c, #9a3412); color: #fb923c; border: 1px solid #fb923c; font-size: 1.5rem; box-shadow: 0 0 20px rgba(251, 146, 60, 0.6); }
-        .tile-256  { background: linear-gradient(135deg, #b45309, #78350f); color: #fbbf24; border: 1px solid #fbbf24; font-size: 1.5rem; box-shadow: 0 0 22px rgba(251, 191, 36, 0.6); }
-        .tile-512  { background: linear-gradient(135deg, #a16207, #713f12); color: #facc15; border: 1px solid #facc15; font-size: 1.5rem; box-shadow: 0 0 24px rgba(250, 204, 21, 0.7); }
-        .tile-1024 { background: linear-gradient(135deg, #15803d, #14532d); color: #4ade80; border: 1px solid #4ade80; font-size: 1.3rem; box-shadow: 0 0 26px rgba(74, 222, 128, 0.7); }
-        .tile-2048 { background: linear-gradient(135deg, #0e7490, #155e75); color: #22d3ee; border: 1px solid #22d3ee; font-size: 1.3rem; box-shadow: 0 0 30px rgba(34, 211, 238, 0.9); }
+        .tile-128  { background: linear-gradient(135deg, #c2410c, #9a3412); color: #fb923c; border: 1px solid #fb923c; font-size: 1.4rem; box-shadow: 0 0 20px rgba(251, 146, 60, 0.6); }
+        .tile-256  { background: linear-gradient(135deg, #b45309, #78350f); color: #fbbf24; border: 1px solid #fbbf24; font-size: 1.4rem; box-shadow: 0 0 22px rgba(251, 191, 36, 0.6); }
+        .tile-512  { background: linear-gradient(135deg, #a16207, #713f12); color: #facc15; border: 1px solid #facc15; font-size: 1.4rem; box-shadow: 0 0 24px rgba(250, 204, 21, 0.7); }
+        .tile-1024 { background: linear-gradient(135deg, #15803d, #14532d); color: #4ade80; border: 1px solid #4ade80; font-size: 1.2rem; box-shadow: 0 0 26px rgba(74, 222, 128, 0.7); }
+        .tile-2048 { background: linear-gradient(135deg, #0e7490, #155e75); color: #22d3ee; border: 1px solid #22d3ee; font-size: 1.2rem; box-shadow: 0 0 30px rgba(34, 211, 238, 0.9); }
+
+        /* 自定義捲軸樣式 (給彈跳視窗用) */
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
     </style>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9844319997817181"
-     crossorigin="anonymous"></script>
-    <meta name="google-site-verification" content="B4GYgN_yeOJ3RjiM3XjNQEIAMEZtGFLNjNpTP6wb03Q" />
 </head>
 <body>
 
     <!-- Header / Scores -->
-    <div class="w-full max-w-md flex items-center justify-between">
+    <div class="w-full max-w-md flex items-center justify-between px-1">
         <div>
-            <h1 class="text-3xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-400 to-cyan-400">
+            <h1 class="text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-400 to-cyan-400">
                 2048
             </h1>
-            <p class="text-[10px] font-semibold tracking-wider text-slate-400 uppercase">CYBER EDITION</p>
+            <p class="text-[9px] font-semibold tracking-wider text-slate-400 uppercase">CYBER EDITION</p>
         </div>
         <div class="flex gap-2">
-            <div class="glass-panel px-3 py-1.5 rounded-xl text-center min-w-[70px]">
-                <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Score</div>
-                <div id="score" class="text-lg font-extrabold text-pink-400">0</div>
+            <div class="glass-panel px-3 py-1 rounded-xl text-center min-w-[65px]">
+                <div class="text-[8px] font-bold text-slate-400 uppercase tracking-wider">Score</div>
+                <div id="score" class="text-base font-extrabold text-pink-400">0</div>
             </div>
-            <div class="glass-panel px-3 py-1.5 rounded-xl text-center min-w-[70px]">
-                <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">Best</div>
-                <div id="best-score" class="text-lg font-extrabold text-amber-400">0</div>
+            <div class="glass-panel px-3 py-1 rounded-xl text-center min-w-[65px]">
+                <div class="text-[8px] font-bold text-slate-400 uppercase tracking-wider">Best</div>
+                <div id="best-score" class="text-base font-extrabold text-amber-400">0</div>
             </div>
         </div>
     </div>
 
-    <!-- Controls Bar -->
-    <div class="w-full max-w-md flex gap-2">
-        <button id="btn-new" class="flex-1 glass-panel hover:bg-slate-800 text-slate-200 font-bold py-2 px-3 rounded-xl transition flex items-center justify-center gap-2 active:scale-95 text-xs">
-            <svg class="w-3.5 h-3.5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-            New Game
-        </button>
-        <button id="btn-undo" class="flex-1 glass-panel hover:bg-slate-800 text-slate-200 font-bold py-2 px-3 rounded-xl transition flex items-center justify-center gap-2 active:scale-95 text-xs">
-            <svg class="w-3.5 h-3.5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
-            Undo
-        </button>
+    <!-- Controls Bar (4 buttons) -->
+    <div class="w-full max-w-md grid grid-cols-4 gap-1.5 px-1">
+        <button id="btn-new" class="glass-panel hover:bg-slate-800 text-slate-200 font-bold py-1.5 px-2 rounded-xl transition text-[11px] flex items-center justify-center gap-1 active:scale-95">New</button>
+        <button id="btn-undo" class="glass-panel hover:bg-slate-800 text-slate-200 font-bold py-1.5 px-2 rounded-xl transition text-[11px] flex items-center justify-center gap-1 active:scale-95">Undo</button>
+        <button id="btn-history" class="glass-panel hover:bg-slate-800 text-slate-200 font-bold py-1.5 px-2 rounded-xl transition text-[11px] flex items-center justify-center gap-1 active:scale-95">History</button>
+        <button id="btn-rank" class="glass-panel hover:bg-slate-800 text-slate-200 font-bold py-1.5 px-2 rounded-xl transition text-[11px] flex items-center justify-center gap-1 active:scale-95 text-cyan-400">Rank</button>
     </div>
 
     <!-- Board Container -->
@@ -160,22 +151,76 @@
             <div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div>
         </div>
 
-        <!-- Overlays -->
-        <div id="overlay" class="absolute inset-0 bg-slate-950/85 backdrop-blur-md rounded-2xl flex flex-col items-center justify-center hidden z-30 transition-all">
-            <h2 id="overlay-title" class="text-3xl font-black mb-2 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Game Over!</h2>
-            <p id="overlay-desc" class="text-slate-400 text-xs font-medium mb-4">No more possible moves available.</p>
-            <button id="btn-restart" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs font-bold py-2.5 px-6 rounded-xl shadow-lg shadow-pink-500/25 active:scale-95 transition">
+        <!-- Game Over Overlay -->
+        <div id="overlay" class="absolute inset-0 bg-slate-950/90 backdrop-blur-md rounded-2xl flex flex-col items-center justify-center hidden z-30 p-4 transition-all">
+            <h2 id="overlay-title" class="text-2xl font-black mb-1 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Game Over!</h2>
+            <p id="final-score-text" class="text-slate-300 text-xs mb-3 font-semibold">Score: <span id="current-end-score" class="text-pink-400 font-bold">0</span></p>
+            
+            <!-- 提交全球排行榜表單 -->
+            <div id="submit-score-box" class="w-full flex flex-col gap-2 mb-3">
+                <input type="text" id="player-name" placeholder="輸入你的玩家名稱 (Max 10字)" maxlength="10" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white text-center focus:outline-none focus:border-cyan-400">
+                <button id="btn-submit-score" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold py-1.5 px-4 rounded-xl shadow active:scale-95 transition">提交至全球排行榜</button>
+            </div>
+
+            <button id="btn-restart" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs font-bold py-2 px-6 rounded-xl shadow-lg shadow-pink-500/25 active:scale-95 transition">
                 Try Again
             </button>
+        </div>
+
+        <!-- History Modal -->
+        <div id="modal-history" class="absolute inset-0 bg-slate-950/95 backdrop-blur-md rounded-2xl flex flex-col p-4 hidden z-40">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="text-base font-bold text-cyan-400">個人歷史紀錄</h3>
+                <button id="close-history" class="text-slate-400 hover:text-white text-sm font-bold px-2">✕</button>
+            </div>
+            <div id="history-list" class="flex-1 overflow-y-auto custom-scroll flex flex-col gap-1.5 text-xs pr-1">
+                <!-- 動態填入 -->
+            </div>
+        </div>
+
+        <!-- Leaderboard Modal -->
+        <div id="modal-rank" class="absolute inset-0 bg-slate-950/95 backdrop-blur-md rounded-2xl flex flex-col p-4 hidden z-40">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="text-base font-bold text-pink-400">全球 Top 100 排行榜</h3>
+                <button id="close-rank" class="text-slate-400 hover:text-white text-sm font-bold px-2">✕</button>
+            </div>
+            <div id="rank-list" class="flex-1 overflow-y-auto custom-scroll flex flex-col gap-1.5 text-xs pr-1">
+                <div class="text-center text-slate-500 py-6">載入中...</div>
+            </div>
         </div>
     </div>
 
     <!-- Footer Guide -->
-    <div class="w-full max-w-md text-center text-[11px] text-slate-500 font-medium">
+    <div class="w-full max-w-md text-center text-[10px] text-slate-500 font-medium">
         Swipe or use <span class="bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded border border-slate-700">Arrow Keys</span> to play
     </div>
 
     <script>
+        // ==========================================
+        // 🛠️ FIREBASE 設定 (請替換為你的 Firebase 專案設定)
+        // ==========================================
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+
+        let db = null;
+        try {
+            if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.firestore();
+            }
+        } catch (e) {
+            console.log("Firebase 尚未正確設定或初始化失敗");
+        }
+
+        // ==========================================
+        // 🎮 遊戲核心邏輯
+        // ==========================================
         const SIZE = 4;
         let board = [];
         let tiles = [];
@@ -203,6 +248,7 @@
             previousState = null;
             updateScore(0);
             overlayEl.classList.add('hidden');
+            document.getElementById('submit-score-box').classList.remove('hidden');
             addRandomTile();
             addRandomTile();
             render();
@@ -218,11 +264,27 @@
             }
         }
 
-        function saveState() {
-            previousState = {
-                board: board.map(row => row.map(cell => cell ? { ...cell } : null)),
-                score: score
+        function saveHistoryRecord(finalScore, maxTile) {
+            let history = JSON.parse(localStorage.getItem('cyber2048_history') || '[]');
+            const record = {
+                score: finalScore,
+                maxTile: maxTile,
+                date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             };
+            history.unshift.record; // 補回正確unshift
+            history.unshift(record);
+            if (history.length > 20) history = history.slice(0, 20); // 最多保留 20 筆
+            localStorage.setItem('cyber2048_history', JSON.stringify(history));
+        }
+
+        function getMaxTileVal() {
+            let max = 0;
+            for (let r = 0; r < SIZE; r++) {
+                for (let c = 0; c < SIZE; c++) {
+                    if (board[r][c] && board[r][c].val > max) max = board[r][c].val;
+                }
+            }
+            return max;
         }
 
         function undo() {
@@ -291,16 +353,12 @@
             tiles.forEach(tile => {
                 const { left, top, tileSize } = getTilePos(tile.r, tile.c);
                 const el = tile.el;
-                
                 el.style.width = `${tileSize}px`;
                 el.style.height = `${tileSize}px`;
-                
                 const posStr = `translate(${left}px, ${top}px)`;
                 el.style.setProperty('--tile-pos', posStr);
                 el.style.transform = posStr;
-
                 el.className = `tile tile-${tile.val}`;
-
                 if (tile.isNew) {
                     el.classList.add('tile-new');
                     tile.isNew = false;
@@ -314,7 +372,6 @@
         async function move(dir) {
             if (isMoving) return;
             isMoving = true;
-
             let moved = false;
             let earnedScore = 0;
             const tilesToRemove = [];
@@ -326,22 +383,13 @@
                     if (!line[i]) continue;
                     let next = i + 1;
                     while (next < line.length && !line[next]) next++;
-
                     if (next < line.length && line[i].val === line[next].val) {
                         const targetVal = line[i].val * 2;
                         earnedScore += targetVal;
-                        const mergedTile = {
-                            id: tileIdCounter++,
-                            val: targetVal,
-                            r: 0, c: 0,
-                            isNew: false,
-                            merged: true
-                        };
-                        
+                        const mergedTile = { id: tileIdCounter++, val: targetVal, r: 0, c: 0, isNew: false, merged: true };
                         line[i].toRemove = true;
                         line[next].toRemove = true;
                         tilesToRemove.push(line[i], line[next]);
-
                         result.push({ tile: mergedTile, from: [line[i], line[next]] });
                         i = next;
                     } else {
@@ -353,22 +401,17 @@
 
             if (dir === 'left') {
                 for (let r = 0; r < SIZE; r++) {
-                    const line = board[r];
-                    const processed = processLine(line);
+                    const processed = processLine(board[r]);
                     for (let c = 0; c < SIZE; c++) {
                         const item = processed[c];
                         if (item) {
                             if (item.from) {
                                 item.from.forEach(t => { t.r = r; t.c = c; });
                                 item.tile.r = r; item.tile.c = c;
-                                board[r][c] = item.tile;
-                                tiles.push(item.tile);
-                                createTileDOM(item.tile);
-                                moved = true;
+                                board[r][c] = item.tile; tiles.push(item.tile); createTileDOM(item.tile); moved = true;
                             } else {
                                 if (item.tile.r !== r || item.tile.c !== c) moved = true;
-                                item.tile.r = r; item.tile.c = c;
-                                board[r][c] = item.tile;
+                                item.tile.r = r; item.tile.c = c; board[r][c] = item.tile;
                             }
                         } else {
                             if (board[r][c]) moved = true;
@@ -378,8 +421,7 @@
                 }
             } else if (dir === 'right') {
                 for (let r = 0; r < SIZE; r++) {
-                    const line = [...board[r]].reverse();
-                    const processed = processLine(line);
+                    const processed = processLine([...board[r]].reverse());
                     for (let c = 0; c < SIZE; c++) {
                         const targetC = SIZE - 1 - c;
                         const item = processed[c];
@@ -387,14 +429,10 @@
                             if (item.from) {
                                 item.from.forEach(t => { t.r = r; t.c = targetC; });
                                 item.tile.r = r; item.tile.c = targetC;
-                                board[r][targetC] = item.tile;
-                                tiles.push(item.tile);
-                                createTileDOM(item.tile);
-                                moved = true;
+                                board[r][targetC] = item.tile; tiles.push(item.tile); createTileDOM(item.tile); moved = true;
                             } else {
                                 if (item.tile.r !== r || item.tile.c !== targetC) moved = true;
-                                item.tile.r = r; item.tile.c = targetC;
-                                board[r][targetC] = item.tile;
+                                item.tile.r = r; item.tile.c = targetC; board[r][targetC] = item.tile;
                             }
                         } else {
                             if (board[r][targetC]) moved = true;
@@ -404,22 +442,17 @@
                 }
             } else if (dir === 'up') {
                 for (let c = 0; c < SIZE; c++) {
-                    const line = [board[0][c], board[1][c], board[2][c], board[3][c]];
-                    const processed = processLine(line);
+                    const processed = processLine([board[0][c], board[1][c], board[2][c], board[3][c]]);
                     for (let r = 0; r < SIZE; r++) {
                         const item = processed[r];
                         if (item) {
                             if (item.from) {
                                 item.from.forEach(t => { t.r = r; t.c = c; });
                                 item.tile.r = r; item.tile.c = c;
-                                board[r][c] = item.tile;
-                                tiles.push(item.tile);
-                                createTileDOM(item.tile);
-                                moved = true;
+                                board[r][c] = item.tile; tiles.push(item.tile); createTileDOM(item.tile); moved = true;
                             } else {
                                 if (item.tile.r !== r || item.tile.c !== c) moved = true;
-                                item.tile.r = r; item.tile.c = c;
-                                board[r][c] = item.tile;
+                                item.tile.r = r; item.tile.c = c; board[r][c] = item.tile;
                             }
                         } else {
                             if (board[r][c]) moved = true;
@@ -429,8 +462,7 @@
                 }
             } else if (dir === 'down') {
                 for (let c = 0; c < SIZE; c++) {
-                    const line = [board[3][c], board[2][c], board[1][c], board[0][c]];
-                    const processed = processLine(line);
+                    const processed = processLine([board[3][c], board[2][c], board[1][c], board[0][c]]);
                     for (let r = 0; r < SIZE; r++) {
                         const targetR = SIZE - 1 - r;
                         const item = processed[r];
@@ -438,14 +470,10 @@
                             if (item.from) {
                                 item.from.forEach(t => { t.r = targetR; t.c = c; });
                                 item.tile.r = targetR; item.tile.c = c;
-                                board[targetR][c] = item.tile;
-                                tiles.push(item.tile);
-                                createTileDOM(item.tile);
-                                moved = true;
+                                board[targetR][c] = item.tile; tiles.push(item.tile); createTileDOM(item.tile); moved = true;
                             } else {
                                 if (item.tile.r !== targetR || item.tile.c !== c) moved = true;
-                                item.tile.r = targetR; item.tile.c = c;
-                                board[targetR][c] = item.tile;
+                                item.tile.r = targetR; item.tile.c = c; board[targetR][c] = item.tile;
                             }
                         } else {
                             if (board[targetR][c]) moved = true;
@@ -458,20 +486,16 @@
             if (moved) {
                 previousState = { board: tempBoardState, score: score };
                 render();
-
                 await new Promise(res => setTimeout(res, 150));
-
                 tilesToRemove.forEach(t => {
                     if (t.el) t.el.remove();
                     tiles = tiles.filter(x => x.id !== t.id);
                 });
-
                 updateScore(score + earnedScore);
                 addRandomTile();
                 render();
                 checkGameOver();
             }
-
             isMoving = false;
         }
 
@@ -487,56 +511,156 @@
                     if (r < SIZE - 1 && board[r][c].val === board[r + 1][c].val) return;
                 }
             }
+            // 遊戲結束觸發
+            saveHistoryRecord(score, getMaxTileVal());
+            document.getElementById('current-end-score').innerText = score;
             overlayEl.classList.remove('hidden');
         }
 
-        // Keyboard Controls
-        window.addEventListener('keydown', (e) => {
-            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
-                e.preventDefault();
+        // ==========================================
+        // 📊 歷史紀錄與排行榜 UI 互動邏輯
+        // ==========================================
+        const modalHistory = document.getElementById('modal-history');
+        const modalRank = document.getElementById('modal-rank');
+        const historyListEl = document.getElementById('history-list');
+        const rankListEl = document.getElementById('rank-list');
+
+        document.getElementById('btn-history').addEventListener('click', () => {
+            const history = JSON.parse(localStorage.getItem('cyber2048_history') || '[]');
+            if (history.length === 0) {
+                historyListEl.innerHTML = `<div class="text-center text-slate-500 py-6">暫無歷史紀錄，快去玩一局吧！</div>`;
+            } else {
+                historyListEl.innerHTML = history.map((item, idx) => `
+                    <div class="bg-slate-900/80 border border-slate-800 p-2 rounded-xl flex justify-between items-center">
+                        <div>
+                            <div class="text-slate-400 text-[10px]">${item.date}</div>
+                            <div class="text-white font-bold">最高方塊: <span class="text-cyan-400">${item.maxTile}</span></div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[10px] text-slate-400">分數</div>
+                            <div class="text-pink-400 font-extrabold text-sm">${item.score}</div>
+                        </div>
+                    </div>
+                `).join('');
             }
+            modalHistory.classList.remove('hidden');
+        });
+
+        document.getElementById('close-history').addEventListener('click', () => modalHistory.classList.add('hidden'));
+
+        document.getElementById('btn-rank').addEventListener('click', async () => {
+            modalRank.classList.remove('hidden');
+            if (!db) {
+                rankListEl.innerHTML = `<div class="text-center text-amber-400 py-4 px-2 text-xs">尚未設定 Firebase 資料庫，請在程式碼中填入你的 firebaseConfig 即可啟用全球排行榜！</div>`;
+                return;
+            }
+            try {
+                rankListEl.innerHTML = `<div class="text-center text-slate-500 py-6">載入中...</div>`;
+                const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(100).get();
+                if (snapshot.empty) {
+                    rankListEl.innerHTML = `<div class="text-center text-slate-500 py-6">暫無全球排名紀錄，來成為第一名吧！</div>`;
+                    return;
+                }
+                let html = '';
+                let rank = 1;
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    let badgeColor = "text-slate-300";
+                    if (rank === 1) badgeColor = "text-amber-400 font-black text-sm";
+                    else if (rank === 2) badgeColor = "text-slate-200 font-bold";
+                    else if (rank === 3) badgeColor = "text-amber-600 font-bold";
+
+                    html += `
+                        <div class="bg-slate-900/80 border border-slate-800 p-2 rounded-xl flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="${badgeColor} w-6 text-center">#${rank}</span>
+                                <div>
+                                    <div class="text-white font-bold text-xs">${escapeHtml(data.name)}</div>
+                                    <div class="text-[9px] text-slate-500">${data.date || ''}</div>
+                                </div>
+                            </div>
+                            <div class="text-pink-400 font-extrabold text-sm">${data.score}</div>
+                        </div>
+                    `;
+                    rank++;
+                });
+                rankListEl.innerHTML = html;
+            } catch (err) {
+                rankListEl.innerHTML = `<div class="text-center text-red-400 py-6">載入排行榜失敗，請檢查網絡或 Firebase 規則。</div>`;
+                console.error(err);
+            }
+        });
+
+        document.getElementById('close-rank').addEventListener('click', () => modalRank.classList.add('hidden'));
+
+        // 提交分數至 Firebase
+        document.getElementById('btn-submit-score').addEventListener('click', async () => {
+            const nameInput = document.getElementById('player-name').value.trim() || '匿名玩家';
+            if (!db) {
+                alert("Firebase 尚未設定，無法上傳排行榜！");
+                return;
+            }
+            const btn = document.getElementById('btn-submit-score');
+            btn.innerText = "提交中...";
+            btn.disabled = true;
+
+            try {
+                await db.collection('leaderboard').add({
+                    name: nameInput,
+                    score: score,
+                    maxTile: getMaxTileVal(),
+                    date: new Date().toLocaleDateString()
+                });
+                alert("成績成功上傳至全球排行榜！");
+                document.getElementById('submit-score-box').classList.add('hidden');
+            } catch (e) {
+                alert("上傳失敗，請稍後再試。");
+                console.error(e);
+                btn.innerText = "提交至全球排行榜";
+                btn.disabled = false;
+            }
+        });
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        // ==========================================
+        // 🕹️ 控制事件監聽
+        // ==========================================
+        window.addEventListener('keydown', (e) => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) e.preventDefault();
             if (e.key === 'ArrowLeft') move('left');
             if (e.key === 'ArrowRight') move('right');
             if (e.key === 'ArrowUp') move('up');
             if (e.key === 'ArrowDown') move('down');
         });
 
-        // Touch Controls (with anti-scroll prevention)
         let startX = 0, startY = 0;
         gridEl.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
             startY = e.touches[0].clientY;
         }, { passive: true });
 
-        gridEl.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-        }, { passive: false });
+        gridEl.addEventListener('touchmove', (e) => { e.preventDefault(); }, { passive: false });
 
         gridEl.addEventListener('touchend', (e) => {
             if (!startX || !startY) return;
             let diffX = e.changedTouches[0].clientX - startX;
             let diffY = e.changedTouches[0].clientY - startY;
-
             if (Math.abs(diffX) > Math.abs(diffY)) {
-                if (Math.abs(diffX) > 30) {
-                    if (diffX > 0) move('right');
-                    else move('left');
-                }
+                if (Math.abs(diffX) > 30) { if (diffX > 0) move('right'); else move('left'); }
             } else {
-                if (Math.abs(diffY) > 30) {
-                    if (diffY > 0) move('down');
-                    else move('up');
-                }
+                if (Math.abs(diffY) > 30) { if (diffY > 0) move('down'); else move('up'); }
             }
-            startX = 0;
-            startY = 0;
+            startX = 0; startY = 0;
         }, { passive: true });
 
         document.getElementById('btn-new').addEventListener('click', newGame);
         document.getElementById('btn-restart').addEventListener('click', newGame);
         document.getElementById('btn-undo').addEventListener('click', undo);
-
         window.addEventListener('resize', render);
+
         init();
     </script>
 </body>
