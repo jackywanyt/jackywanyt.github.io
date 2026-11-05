@@ -1,26 +1,26 @@
 <!DOCTYPE html>
-<html lang="zh-HK">
+<html lang="en">
 <head>
-    <!-- 基本網頁設定與行動裝置優化 -->
+    <!-- Basic Page Setup & Mobile Viewport Optimization -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0b0f19">
 
-    <!-- SEO 優化版標題與雙語描述 (貼地、聚焦於遊戲核心與排行榜) -->
-    <title>Cyber 2048 | 全球排行榜 2048 網頁小遊戲 (Cyber 2048 Leaderboard Game)</title>
-    <meta name="description" content="挑戰全新升級的 Cyber 2048 益智遊戲！支援全球 Top 100 排行榜、個人歷史成績紀錄、流暢觸控滑動與 Undo 復原功能。免下載即開即玩。Play the online 2048 puzzle game featuring a global leaderboard, game history, and smooth mobile touch controls!">
-    <meta name="keywords" content="2048, Cyber 2048, 2048全球排行榜, 2048 leaderboard, 2048線上玩, HTML5網頁遊戲, 益智小遊戲,流動版2048, puzzle game">
+    <!-- SEO Optimized Title & Bilingual Description -->
+    <title>Cyber 2048 | Global Leaderboard 2048 Puzzle Game</title>
+    <meta name="description" content="Play the newly upgraded Cyber 2048 puzzle game! Featuring a global Top 100 leaderboard, personal game history, smooth touch controls, and undo features. Free to play online!">
+    <meta name="keywords" content="2048, Cyber 2048, 2048 global leaderboard, 2048 leaderboard, play 2048 online, HTML5 web game, puzzle mini game, mobile 2048">
 
-    <!-- 社群分享預覽設定 (Facebook, WhatsApp, Discord 分享時顯示) -->
-    <meta property="og:title" content="Cyber 2048 | 挑戰全球 Top 100 嘅 2048 排行榜！">
-    <meta property="og:description" content="你能登上全球排行榜第一名嗎？組織你的極限分數，挑戰最高分與歷史紀錄！Play now with global leaderboard!">
+    <!-- Social Media Preview (OG) -->
+    <meta property="og:title" content="Cyber 2048 | Challenge the Global Top 100 Leaderboard!">
+    <meta property="og:description" content="Can you reach #1 on the global leaderboard? Play Cyber 2048 for free and beat your high scores!">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Firebase SDK (Compat) 用於全球排行榜 -->
+    <!-- Firebase SDK (Compat) for Global Leaderboard -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
@@ -167,8 +167,8 @@
             <p id="final-score-text" class="text-slate-300 text-xs mb-3 font-semibold">Score: <span id="current-end-score" class="text-pink-400 font-bold">0</span></p>
             
             <div id="submit-score-box" class="w-full flex flex-col gap-2 mb-3">
-                <input type="text" id="player-name" placeholder="輸入你的玩家名稱 (Max 10字)" maxlength="10" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white text-center focus:outline-none focus:border-cyan-400">
-                <button id="btn-submit-score" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold py-1.5 px-4 rounded-xl shadow active:scale-95 transition">提交至全球排行榜</button>
+                <input type="text" id="player-name" placeholder="Enter your name (Max 10 chars)" maxlength="10" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white text-center focus:outline-none focus:border-cyan-400">
+                <button id="btn-submit-score" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold py-1.5 px-4 rounded-xl shadow active:scale-95 transition">Submit to Leaderboard</button>
             </div>
 
             <button id="btn-restart" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs font-bold py-2 px-6 rounded-xl shadow-lg shadow-pink-500/25 active:scale-95 transition">
@@ -179,7 +179,7 @@
         <!-- History Modal -->
         <div id="modal-history" class="absolute inset-0 bg-slate-950/95 backdrop-blur-md rounded-2xl flex flex-col p-4 hidden z-40">
             <div class="flex justify-between items-center mb-2">
-                <h3 class="text-base font-bold text-cyan-400">個人歷史紀錄</h3>
+                <h3 class="text-base font-bold text-cyan-400">Game History</h3>
                 <button id="close-history" class="text-slate-400 hover:text-white text-sm font-bold px-2">✕</button>
             </div>
             <div id="history-list" class="flex-1 overflow-y-auto custom-scroll flex flex-col gap-1.5 text-xs pr-1"></div>
@@ -188,11 +188,11 @@
         <!-- Leaderboard Modal -->
         <div id="modal-rank" class="absolute inset-0 bg-slate-950/95 backdrop-blur-md rounded-2xl flex flex-col p-4 hidden z-40">
             <div class="flex justify-between items-center mb-2">
-                <h3 class="text-base font-bold text-pink-400">全球 Top 100 排行榜</h3>
+                <h3 class="text-base font-bold text-pink-400">Global Top 100 Leaderboard</h3>
                 <button id="close-rank" class="text-slate-400 hover:text-white text-sm font-bold px-2">✕</button>
             </div>
             <div id="rank-list" class="flex-1 overflow-y-auto custom-scroll flex flex-col gap-1.5 text-xs pr-1">
-                <div class="text-center text-slate-500 py-6">載入中...</div>
+                <div class="text-center text-slate-500 py-6">Loading...</div>
             </div>
         </div>
     </div>
@@ -204,7 +204,7 @@
 
     <script>
         // ==========================================
-        // 🛠️ FIREBASE 設定 (保留你之前的連線參數)
+        // 🛠️ FIREBASE CONFIGURATION
         // ==========================================
         const firebaseConfig = {
             apiKey: "YOUR_API_KEY",
@@ -222,11 +222,11 @@
                 db = firebase.firestore();
             }
         } catch (e) {
-            console.log("Firebase 尚未正確設定或初始化失敗");
+            console.log("Firebase initialization failed");
         }
 
         // ==========================================
-        // 🎮 遊戲核心邏輯
+        // 🎮 GAME CORE LOGIC
         // ==========================================
         const SIZE = 4;
         let board = [];
@@ -471,7 +471,7 @@
                                 item.tile.r = targetR; item.tile.c = c;
                                 board[targetR][c] = item.tile; tiles.push(item.tile); createTileDOM(item.tile); moved = true;
                             } else {
-                                if (item.tile.r !== r || item.tile.c !== c) moved = true;
+                                if (item.tile.r !== targetR || item.tile.c !== c) moved = true;
                                 item.tile.r = targetR; item.tile.c = c; board[targetR][c] = item.tile;
                             }
                         } else {
@@ -516,7 +516,7 @@
         }
 
         // ==========================================
-        // 📊 UI 彈窗與數據處理
+        // 📊 UI Modals & Data Handling
         // ==========================================
         const modalHistory = document.getElementById('modal-history');
         const modalRank = document.getElementById('modal-rank');
@@ -526,16 +526,16 @@
         document.getElementById('btn-history').addEventListener('click', () => {
             const history = JSON.parse(localStorage.getItem('cyber2048_history') || '[]');
             if (history.length === 0) {
-                historyListEl.innerHTML = `<div class="text-center text-slate-500 py-6">暫無歷史紀錄，快去玩一局吧！</div>`;
+                historyListEl.innerHTML = `<div class="text-center text-slate-500 py-6">No game history yet, play a game now!</div>`;
             } else {
                 historyListEl.innerHTML = history.map(item => `
                     <div class="bg-slate-900/80 border border-slate-800 p-2 rounded-xl flex justify-between items-center">
                         <div>
                             <div class="text-slate-400 text-[10px]">${item.date}</div>
-                            <div class="text-white font-bold">最高方塊: <span class="text-cyan-400">${item.maxTile}</span></div>
+                            <div class="text-white font-bold">Max Tile: <span class="text-cyan-400">${item.maxTile}</span></div>
                         </div>
                         <div class="text-right">
-                            <div class="text-[10px] text-slate-400">分數</div>
+                            <div class="text-[10px] text-slate-400">Score</div>
                             <div class="text-pink-400 font-extrabold text-sm">${item.score}</div>
                         </div>
                     </div>
@@ -549,14 +549,14 @@
         document.getElementById('btn-rank').addEventListener('click', async () => {
             modalRank.classList.remove('hidden');
             if (!db) {
-                rankListEl.innerHTML = `<div class="text-center text-amber-400 py-4 px-2 text-xs">請確保已輸入正確的 Firebase 設定。</div>`;
+                rankListEl.innerHTML = `<div class="text-center text-amber-400 py-4 px-2 text-xs">Please ensure valid Firebase configuration.</div>`;
                 return;
             }
             try {
-                rankListEl.innerHTML = `<div class="text-center text-slate-500 py-6">載入中...</div>`;
+                rankListEl.innerHTML = `<div class="text-center text-slate-500 py-6">Loading...</div>`;
                 const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(100).get();
                 if (snapshot.empty) {
-                    rankListEl.innerHTML = `<div class="text-center text-slate-500 py-6">暫無全球排名紀錄！</div>`;
+                    rankListEl.innerHTML = `<div class="text-center text-slate-500 py-6">No global records found!</div>`;
                     return;
                 }
                 let html = '';
@@ -578,7 +578,7 @@
                             <div class="flex items-center gap-3">
                                 <span class="${badgeColor} w-6 text-center">#${rank}</span>
                                 <div>
-                                    <div class="text-white font-bold text-xs">${escapeHtml(data.name || '匿名')}</div>
+                                    <div class="text-white font-bold text-xs">${escapeHtml(data.name || 'Anonymous')}</div>
                                     <div class="text-[9px] text-slate-500">${displayDate}</div>
                                 </div>
                             </div>
@@ -589,20 +589,20 @@
                 });
                 rankListEl.innerHTML = html;
             } catch (err) {
-                rankListEl.innerHTML = `<div class="text-center text-red-400 py-6">載入排行榜失敗。</div>`;
+                rankListEl.innerHTML = `<div class="text-center text-red-400 py-6">Failed to load leaderboard.</div>`;
             }
         });
 
         document.getElementById('close-rank').addEventListener('click', () => modalRank.classList.add('hidden'));
 
         document.getElementById('btn-submit-score').addEventListener('click', async () => {
-            const nameInput = document.getElementById('player-name').value.trim() || '匿名玩家';
+            const nameInput = document.getElementById('player-name').value.trim() || 'Anonymous';
             if (!db) {
-                alert("Firebase 尚未設定！");
+                alert("Firebase is not configured!");
                 return;
             }
             const btn = document.getElementById('btn-submit-score');
-            btn.innerText = "提交中...";
+            btn.innerText = "Submitting...";
             btn.disabled = true;
 
             try {
@@ -612,11 +612,11 @@
                     maxTile: getMaxTileVal(),
                     date: new Date().toLocaleDateString()
                 });
-                alert("成績成功上傳！");
+                alert("Score successfully submitted!");
                 document.getElementById('submit-score-box').classList.add('hidden');
             } catch (e) {
-                alert("上傳失敗，請稍後再試。");
-                btn.innerText = "提交至全球排行榜";
+                alert("Submission failed, please try again.");
+                btn.innerText = "Submit to Leaderboard";
                 btn.disabled = false;
             }
         });
@@ -626,7 +626,7 @@
         }
 
         // ==========================================
-        // 🕹️ 全頁面（包含下半部空白）手勢監聽優化
+        // 🕹️ Full-Screen Touch & Keyboard Controls
         // ==========================================
         window.addEventListener('keydown', (e) => {
             if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) e.preventDefault();
@@ -638,9 +638,7 @@
 
         let startX = 0, startY = 0;
 
-        // 監聽全域 document，讓用戶在畫面上半部、下半部、棋盤外滑動皆可操作
         document.addEventListener('touchstart', (e) => {
-            // 如果點擊到按鈕、輸入框或彈窗內容，不觸發滑動
             if (e.target.closest('button, input, #modal-history, #modal-rank')) return;
             startX = e.touches[0].clientX;
             startY = e.touches[0].clientY;
