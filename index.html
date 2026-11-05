@@ -1,10 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-HK">
 <head>
+    <!-- 基本網頁設定與行動裝置優化 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Cyber 2048 | 霓虹賽博朋克 2048 手機網頁小遊戲</title>
-    <meta name="description" content="遊玩免費的 Cyber 2048 霓虹賽博朋克風格益智遊戲！支援手機觸控滑動、流暢動畫、個人歷史紀錄與全球排行榜。">
+    <meta name="theme-color" content="#0b0f19">
+
+    <!-- SEO 優化版標題與雙語描述 (貼地、聚焦於遊戲核心與排行榜) -->
+    <title>Cyber 2048 | 全球排行榜 2048 網頁小遊戲 (Cyber 2048 Leaderboard Game)</title>
+    <meta name="description" content="挑戰全新升級的 Cyber 2048 益智遊戲！支援全球 Top 100 排行榜、個人歷史成績紀錄、流暢觸控滑動與 Undo 復原功能。免下載即開即玩。Play the online 2048 puzzle game featuring a global leaderboard, game history, and smooth mobile touch controls!">
+    <meta name="keywords" content="2048, Cyber 2048, 2048全球排行榜, 2048 leaderboard, 2048線上玩, HTML5網頁遊戲, 益智小遊戲,流動版2048, puzzle game">
+
+    <!-- 社群分享預覽設定 (Facebook, WhatsApp, Discord 分享時顯示) -->
+    <meta property="og:title" content="Cyber 2048 | 挑戰全球 Top 100 嘅 2048 排行榜！">
+    <meta property="og:description" content="你能登上全球排行榜第一名嗎？組織你的極限分數，挑戰最高分與歷史紀錄！Play now with global leaderboard!">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
     
@@ -106,7 +118,6 @@
         .tile-1024 { background: linear-gradient(135deg, #15803d, #14532d); color: #4ade80; border: 1px solid #4ade80; font-size: 1.2rem; box-shadow: 0 0 26px rgba(74, 222, 128, 0.7); }
         .tile-2048 { background: linear-gradient(135deg, #0e7490, #155e75); color: #22d3ee; border: 1px solid #22d3ee; font-size: 1.2rem; box-shadow: 0 0 30px rgba(34, 211, 238, 0.9); }
 
-        /* 自定義捲軸樣式 (給彈跳視窗用) */
         .custom-scroll::-webkit-scrollbar { width: 4px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
     </style>
@@ -133,7 +144,7 @@
         </div>
     </div>
 
-    <!-- Controls Bar (4 buttons) -->
+    <!-- Controls Bar -->
     <div class="w-full max-w-md grid grid-cols-4 gap-1.5 px-1">
         <button id="btn-new" class="glass-panel hover:bg-slate-800 text-slate-200 font-bold py-1.5 px-2 rounded-xl transition text-[11px] flex items-center justify-center gap-1 active:scale-95">New</button>
         <button id="btn-undo" class="glass-panel hover:bg-slate-800 text-slate-200 font-bold py-1.5 px-2 rounded-xl transition text-[11px] flex items-center justify-center gap-1 active:scale-95">Undo</button>
@@ -144,7 +155,6 @@
     <!-- Board Container -->
     <div class="board-wrapper">
         <div id="grid" class="grid-container">
-            <!-- 16 Slots -->
             <div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div>
             <div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div>
             <div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div>
@@ -156,7 +166,6 @@
             <h2 id="overlay-title" class="text-2xl font-black mb-1 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Game Over!</h2>
             <p id="final-score-text" class="text-slate-300 text-xs mb-3 font-semibold">Score: <span id="current-end-score" class="text-pink-400 font-bold">0</span></p>
             
-            <!-- 提交全球排行榜表單 -->
             <div id="submit-score-box" class="w-full flex flex-col gap-2 mb-3">
                 <input type="text" id="player-name" placeholder="輸入你的玩家名稱 (Max 10字)" maxlength="10" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white text-center focus:outline-none focus:border-cyan-400">
                 <button id="btn-submit-score" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold py-1.5 px-4 rounded-xl shadow active:scale-95 transition">提交至全球排行榜</button>
@@ -173,9 +182,7 @@
                 <h3 class="text-base font-bold text-cyan-400">個人歷史紀錄</h3>
                 <button id="close-history" class="text-slate-400 hover:text-white text-sm font-bold px-2">✕</button>
             </div>
-            <div id="history-list" class="flex-1 overflow-y-auto custom-scroll flex flex-col gap-1.5 text-xs pr-1">
-                <!-- 動態填入 -->
-            </div>
+            <div id="history-list" class="flex-1 overflow-y-auto custom-scroll flex flex-col gap-1.5 text-xs pr-1"></div>
         </div>
 
         <!-- Leaderboard Modal -->
@@ -190,29 +197,27 @@
         </div>
     </div>
 
-    <!-- Footer Guide -->
-    <div class="w-full max-w-md text-center text-[10px] text-slate-500 font-medium">
-        Swipe or use <span class="bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded border border-slate-700">Arrow Keys</span> to play
+    <!-- Footer Area (Swipe Control Available Here) -->
+    <div class="w-full max-w-md text-center text-[10px] text-slate-500 font-medium py-4 flex-1 flex items-center justify-center">
+        Swipe anywhere or use <span class="bg-slate-800 text-slate-300 px-1.5 py-0.5 mx-1 rounded border border-slate-700">Arrow Keys</span> to play
     </div>
 
     <script>
         // ==========================================
-        // 🛠️ FIREBASE 設定 (請替換為你的 Firebase 專案設定)
+        // 🛠️ FIREBASE 設定 (保留你之前的連線參數)
         // ==========================================
         const firebaseConfig = {
-              apiKey: "AIzaSyAAAwcNQ5mDUUR_A27PbGNhu64tytQ7tSE",
-  authDomain: "mini-game-2048.firebaseapp.com",
-  projectId: "mini-game-2048",
-  storageBucket: "mini-game-2048.firebasestorage.app",
-  messagingSenderId: "119779986825",
-  appId: "1:119779986825:web:e1bbc859f068ff882da558",
-  measurementId: "G-F8B9HWR005"
-    
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID"
         };
 
         let db = null;
         try {
-            if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+            if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY") {
                 firebase.initializeApp(firebaseConfig);
                 db = firebase.firestore();
             }
@@ -273,9 +278,8 @@
                 maxTile: maxTile,
                 date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             };
-            history.unshift.record; // 補回正確unshift
             history.unshift(record);
-            if (history.length > 20) history = history.slice(0, 20); // 最多保留 20 筆
+            if (history.length > 20) history = history.slice(0, 20);
             localStorage.setItem('cyber2048_history', JSON.stringify(history));
         }
 
@@ -318,14 +322,7 @@
             if (emptyCells.length > 0) {
                 const { r, c } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
                 const val = Math.random() < 0.9 ? 2 : 4;
-                const newTile = {
-                    id: tileIdCounter++,
-                    val: val,
-                    r: r,
-                    c: c,
-                    isNew: true,
-                    merged: false
-                };
+                const newTile = { id: tileIdCounter++, val: val, r: r, c: c, isNew: true, merged: false };
                 board[r][c] = newTile;
                 tiles.push(newTile);
                 createTileDOM(newTile);
@@ -474,7 +471,7 @@
                                 item.tile.r = targetR; item.tile.c = c;
                                 board[targetR][c] = item.tile; tiles.push(item.tile); createTileDOM(item.tile); moved = true;
                             } else {
-                                if (item.tile.r !== targetR || item.tile.c !== c) moved = true;
+                                if (item.tile.r !== r || item.tile.c !== c) moved = true;
                                 item.tile.r = targetR; item.tile.c = c; board[targetR][c] = item.tile;
                             }
                         } else {
@@ -513,14 +510,13 @@
                     if (r < SIZE - 1 && board[r][c].val === board[r + 1][c].val) return;
                 }
             }
-            // 遊戲結束觸發
             saveHistoryRecord(score, getMaxTileVal());
             document.getElementById('current-end-score').innerText = score;
             overlayEl.classList.remove('hidden');
         }
 
         // ==========================================
-        // 📊 歷史紀錄與排行榜 UI 互動邏輯
+        // 📊 UI 彈窗與數據處理
         // ==========================================
         const modalHistory = document.getElementById('modal-history');
         const modalRank = document.getElementById('modal-rank');
@@ -532,7 +528,7 @@
             if (history.length === 0) {
                 historyListEl.innerHTML = `<div class="text-center text-slate-500 py-6">暫無歷史紀錄，快去玩一局吧！</div>`;
             } else {
-                historyListEl.innerHTML = history.map((item, idx) => `
+                historyListEl.innerHTML = history.map(item => `
                     <div class="bg-slate-900/80 border border-slate-800 p-2 rounded-xl flex justify-between items-center">
                         <div>
                             <div class="text-slate-400 text-[10px]">${item.date}</div>
@@ -553,14 +549,14 @@
         document.getElementById('btn-rank').addEventListener('click', async () => {
             modalRank.classList.remove('hidden');
             if (!db) {
-                rankListEl.innerHTML = `<div class="text-center text-amber-400 py-4 px-2 text-xs">尚未設定 Firebase 資料庫，請在程式碼中填入你的 firebaseConfig 即可啟用全球排行榜！</div>`;
+                rankListEl.innerHTML = `<div class="text-center text-amber-400 py-4 px-2 text-xs">請確保已輸入正確的 Firebase 設定。</div>`;
                 return;
             }
             try {
                 rankListEl.innerHTML = `<div class="text-center text-slate-500 py-6">載入中...</div>`;
                 const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(100).get();
                 if (snapshot.empty) {
-                    rankListEl.innerHTML = `<div class="text-center text-slate-500 py-6">暫無全球排名紀錄，來成為第一名吧！</div>`;
+                    rankListEl.innerHTML = `<div class="text-center text-slate-500 py-6">暫無全球排名紀錄！</div>`;
                     return;
                 }
                 let html = '';
@@ -572,13 +568,18 @@
                     else if (rank === 2) badgeColor = "text-slate-200 font-bold";
                     else if (rank === 3) badgeColor = "text-amber-600 font-bold";
 
+                    let displayDate = data.date || '';
+                    if (data.date && typeof data.date === 'object' && data.date.seconds) {
+                        displayDate = new Date(data.date.seconds * 1000).toLocaleDateString();
+                    }
+
                     html += `
                         <div class="bg-slate-900/80 border border-slate-800 p-2 rounded-xl flex justify-between items-center">
                             <div class="flex items-center gap-3">
                                 <span class="${badgeColor} w-6 text-center">#${rank}</span>
                                 <div>
-                                    <div class="text-white font-bold text-xs">${escapeHtml(data.name)}</div>
-                                    <div class="text-[9px] text-slate-500">${data.date || ''}</div>
+                                    <div class="text-white font-bold text-xs">${escapeHtml(data.name || '匿名')}</div>
+                                    <div class="text-[9px] text-slate-500">${displayDate}</div>
                                 </div>
                             </div>
                             <div class="text-pink-400 font-extrabold text-sm">${data.score}</div>
@@ -588,18 +589,16 @@
                 });
                 rankListEl.innerHTML = html;
             } catch (err) {
-                rankListEl.innerHTML = `<div class="text-center text-red-400 py-6">載入排行榜失敗，請檢查網絡或 Firebase 規則。</div>`;
-                console.error(err);
+                rankListEl.innerHTML = `<div class="text-center text-red-400 py-6">載入排行榜失敗。</div>`;
             }
         });
 
         document.getElementById('close-rank').addEventListener('click', () => modalRank.classList.add('hidden'));
 
-        // 提交分數至 Firebase
         document.getElementById('btn-submit-score').addEventListener('click', async () => {
             const nameInput = document.getElementById('player-name').value.trim() || '匿名玩家';
             if (!db) {
-                alert("Firebase 尚未設定，無法上傳排行榜！");
+                alert("Firebase 尚未設定！");
                 return;
             }
             const btn = document.getElementById('btn-submit-score');
@@ -613,11 +612,10 @@
                     maxTile: getMaxTileVal(),
                     date: new Date().toLocaleDateString()
                 });
-                alert("成績成功上傳至全球排行榜！");
+                alert("成績成功上傳！");
                 document.getElementById('submit-score-box').classList.add('hidden');
             } catch (e) {
                 alert("上傳失敗，請稍後再試。");
-                console.error(e);
                 btn.innerText = "提交至全球排行榜";
                 btn.disabled = false;
             }
@@ -628,7 +626,7 @@
         }
 
         // ==========================================
-        // 🕹️ 控制事件監聽
+        // 🕹️ 全頁面（包含下半部空白）手勢監聽優化
         // ==========================================
         window.addEventListener('keydown', (e) => {
             if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) e.preventDefault();
@@ -639,17 +637,27 @@
         });
 
         let startX = 0, startY = 0;
-        gridEl.addEventListener('touchstart', (e) => {
+
+        // 監聽全域 document，讓用戶在畫面上半部、下半部、棋盤外滑動皆可操作
+        document.addEventListener('touchstart', (e) => {
+            // 如果點擊到按鈕、輸入框或彈窗內容，不觸發滑動
+            if (e.target.closest('button, input, #modal-history, #modal-rank')) return;
             startX = e.touches[0].clientX;
             startY = e.touches[0].clientY;
         }, { passive: true });
 
-        gridEl.addEventListener('touchmove', (e) => { e.preventDefault(); }, { passive: false });
+        document.addEventListener('touchmove', (e) => {
+            if (e.target.closest('button, input, #modal-history, #modal-rank')) return;
+            e.preventDefault();
+        }, { passive: false });
 
-        gridEl.addEventListener('touchend', (e) => {
+        document.addEventListener('touchend', (e) => {
             if (!startX || !startY) return;
+            if (e.target.closest('button, input, #modal-history, #modal-rank')) return;
+
             let diffX = e.changedTouches[0].clientX - startX;
             let diffY = e.changedTouches[0].clientY - startY;
+
             if (Math.abs(diffX) > Math.abs(diffY)) {
                 if (Math.abs(diffX) > 30) { if (diffX > 0) move('right'); else move('left'); }
             } else {
