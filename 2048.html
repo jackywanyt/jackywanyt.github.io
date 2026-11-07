@@ -166,7 +166,7 @@
 </head>
 <body>
  
-<!-- 🌐 Dynamic Navbar Container (與 index.html 一致的寬版容器) -->
+<!-- 🌐 Dynamic Navbar Container -->
     <header class="w-full max-w-4xl mx-auto px-4 pt-2">
         <div id="navbar-container"></div>
     </header>
@@ -719,11 +719,9 @@
 
         init();
 
-      
-// ==========================================
+        // ==========================================
         // 🌐 Dynamic Navbar Loader Handler
         // ==========================================
-<script>
         document.addEventListener("DOMContentLoaded", () => {
             const container = document.getElementById('navbar-container');
             if (!container) return;
@@ -736,12 +734,11 @@
                 .then(html => {
                     container.innerHTML = html;
 
-                    // 綁定手機版漢堡包點擊事件（修正版）
+                    // 綁定手機版漢堡包點擊事件
                     const navToggle = document.getElementById('navToggle');
                     const navMenu = document.getElementById('navMenu');
                     if (navToggle && navMenu) {
                         navToggle.addEventListener('click', () => {
-                            // 點擊時切換 hidden 狀態，並在手機上展開為 flex
                             navMenu.classList.toggle('hidden');
                             navMenu.classList.toggle('flex');
                         });
@@ -759,8 +756,6 @@
                 })
                 .catch(error => console.log('Navbar component not loaded yet.'));
         });
-</script>
-
+    </script>
 </body>
 </html>
-
