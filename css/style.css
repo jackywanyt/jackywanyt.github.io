@@ -1,17 +1,19 @@
-/* 全局基礎設定 */
+/* ==========================================
+   1. 全局基礎設定 (Global & Navbar Theme)
+   ========================================== */
 :root {
-  --nav-bg: rgba(255, 255, 255, 0.9);
-  --nav-text: #1f2937;
-  --nav-accent: #2563eb;
-  --nav-accent-hover: #1d4ed8;
-  --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --nav-bg: rgba(15, 23, 42, 0.85);        /* 深色半透明玻璃質感 */
+  --nav-text: #f8fafc;                  /* 亮白色文字 */
+  --nav-accent: #38bdf8;                /* 賽博青色 (Cyber Cyan) */
+  --nav-accent-hover: #0ea5e9;          /* Hover 時的亮藍色 */
+  --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #333;
-  background-color: #f9fafb;
+  background-color: #0b0f19; /* 與你頁面一致的深色背景 */
 }
 
 main {
@@ -20,7 +22,9 @@ main {
   padding: 0 1.5rem;
 }
 
-/* Navbar 組件樣式 */
+/* ==========================================
+   2. Navbar 導航欄主體樣式 (橫向置頂)
+   ========================================== */
 .navbar {
   position: sticky;
   top: 0;
@@ -35,7 +39,7 @@ main {
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem 1.5rem;
+  padding: 1rem 1.5ent;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -46,6 +50,7 @@ main {
   font-weight: 800;
   color: var(--nav-text);
   text-decoration: none;
+  letter-spacing: -0.5px;
 }
 
 .logo-highlight {
@@ -70,6 +75,7 @@ main {
   color: var(--nav-text);
   text-decoration: none;
   font-weight: 500;
+  font-size: 0.95rem;
   padding: 0.5rem 0;
   position: relative;
   transition: color 0.2s ease;
@@ -80,6 +86,7 @@ main {
   color: var(--nav-accent);
 }
 
+/* Hover 時底部發光底線動畫 */
 .nav-link::after {
   content: '';
   position: absolute;
@@ -89,6 +96,7 @@ main {
   height: 2px;
   background-color: var(--nav-accent);
   transition: width 0.3s ease;
+  box-shadow: 0 0 8px var(--nav-accent);
 }
 
 .nav-link:hover::after,
@@ -96,7 +104,9 @@ main {
   width: 100%;
 }
 
-/* Dropdown */
+/* ==========================================
+   3. Dropdown 下拉選單樣式 (Games / 2048)
+   ========================================== */
 .dropdown {
   position: relative;
 }
@@ -111,11 +121,12 @@ main {
   position: absolute;
   top: 100%;
   left: 0;
-  background: #ffffff;
+  background: #1e293b; /* 深色下拉選單背景 */
+  border: 1px solid rgba(255, 255, 255, 0.1);
   min-width: 180px;
   padding: 0.5rem 0;
   border-radius: 8px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   list-style: none;
   opacity: 0;
   visibility: hidden;
@@ -132,38 +143,47 @@ main {
 .dropdown-item {
   display: block;
   padding: 0.6rem 1.2rem;
-  color: var(--nav-text);
+  color: #f8fafc;
   text-decoration: none;
   font-size: 0.9rem;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .dropdown-item:hover {
-  background: #f3f4f6;
+  background: rgba(56, 189, 248, 0.1);
   color: var(--nav-accent);
 }
 
-/* Button */
+/* ==========================================
+   4. CTA 按鈕樣式
+   ========================================== */
 .btn-primary {
-  background: var(--nav-accent);
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
   color: #ffffff;
   padding: 0.6rem 1.4rem;
   border-radius: 50px;
   text-decoration: none;
   font-weight: 600;
   font-size: 0.9rem;
-  transition: background 0.2s ease;
+  box-shadow: 0 0 15px rgba(14, 165, 233, 0.4);
+  transition: all 0.2s ease;
 }
 
 .btn-primary:hover {
-  background: var(--nav-accent-hover);
+  background: linear-gradient(135deg, #38bdf8, #1d4ed8);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.6);
+  transform: translateY(-1px);
 }
 
-/* Mobile responsive Toggle */
+/* ==========================================
+   5. 手機版響應式 (RWD & Hamburger Menu)
+   ========================================== */
 .nav-toggle {
   display: none;
   background: none;
   border: none;
   cursor: pointer;
+  padding: 0.5rem;
 }
 
 .hamburger,
@@ -187,18 +207,39 @@ main {
 
 @media (max-width: 768px) {
   .nav-toggle { display: block; }
+  
   .nav-menu {
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    background: #ffffff;
+    background: #0f172a; /* 手機展開選單的深色背景 */
     flex-direction: column;
     padding: 1.5rem;
     gap: 1.5rem;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    display: none;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: none; /* 預設隱收，透過 JS 控制展開 */
   }
-  .nav-menu.is-active { display: flex; }
-  .nav-list { flex-direction: column; width: 100%; }
+
+  .nav-menu.is-active { 
+    display: flex; 
+  }
+
+  .nav-list { 
+    flex-direction: column; 
+    width: 100%; 
+  }
+
+  .dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    background: rgba(255, 255, 255, 0.03);
+    border: none;
+    margin-top: 0.5rem;
+    padding-left: 1rem;
+  }
 }
