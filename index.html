@@ -192,8 +192,9 @@
         <p>© 2026 Cyber Arcade. Built with GitHub Pages & Firebase.</p>
     </footer>
 
-    <!-- 🌐 Dynamic Navbar Loader Handler -->
-    <script>
+   // ==========================================
+        // 🌐 Dynamic Navbar Loader Handler
+        // ==========================================
         document.addEventListener("DOMContentLoaded", () => {
             const container = document.getElementById('navbar-container');
             if (!container) return;
@@ -206,6 +207,18 @@
                 .then(html => {
                     container.innerHTML = html;
 
+                    // 綁定手機版漢堡包點擊事件（修正版）
+                    const navToggle = document.getElementById('navToggle');
+                    const navMenu = document.getElementById('navMenu');
+                    if (navToggle && navMenu) {
+                        navToggle.addEventListener('click', () => {
+                            // 點擊時切換 hidden 狀態，並在手機上展開為 flex
+                            navMenu.classList.toggle('hidden');
+                            navMenu.classList.toggle('flex');
+                        });
+                    }
+
+                    // 自動根據當前網頁檔名高亮對應的 Link
                     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
                     const navLinks = document.querySelectorAll('.nav-link');
                     navLinks.forEach(link => {
@@ -217,6 +230,6 @@
                 })
                 .catch(error => console.log('Navbar component not loaded yet.'));
         });
-    </script>
+    
 </body>
 </html>
