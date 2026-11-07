@@ -1,1 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<!-- Google AdSense Auto Ads Code -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9844319997817181"
+ crossorigin="anonymous"></script>
+
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8B9HWR005"></script>
+
+ <!--  style.css 的位置 -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-F8B9HWR005');
+    </script>
+    
+    <!-- Basic Page Setup & Mobile Viewport Optimization -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0b0f19">
+
+    <!-- SEO Optimized Title & Comprehensive English Description -->
+    <title>Cyber 2048 | Play Free Online 2048 Game with Global Leaderboard</title>
+    <meta name="description" content="Play Cyber 2048 online for free! Experience sleek cyberpunk design, smooth mobile swipe controls, move undo feature, and global Top 100 leaderboards. No download required.">
+    <meta name="keywords" content="2048, Cyber 2048, 2048 online, play 2048 free, 2048 game, 2048 global leaderboard, cyberpunk 2048, HTML5 puzzle game, mobile 2048 game, web game, unblocked 2048">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jackywanyt.github.io/">
+
+    <!-- Google Structured Data (Schema.org JSON-LD) - Enhanced for Search Indexing -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Cyber 2048",
+      "operatingSystem": "All",
+      "applicationCategory": "GameApplication",
+      "genre": "Puzzle",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "A free online Cyberpunk-themed 2048 puzzle game featuring real-time global leaderboards, game history tracking, and mobile touch swipe controls."
+    }
+    </script>
+
+    <!-- Social Media Open Graph (OG) Tags -->
+    <meta property="og:title" content="Cyber 2048 | Challenge the Global Top 100 Leaderboard!">
+    <meta property="og:description" content="Can you reach the #1 spot on the global leaderboard? Play Cyber 2048 for free, track your history, and beat your high scores!">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cyber 2048 | Free Online Cyberpunk 2048 Game">
+    <meta name="twitter:description" content="Join the global competition! Play Cyber 2048 online with touch gesture support and live rank tracking.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK (Compat) for Global Leaderboard -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            touch-action: none;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            background-color: #0b0f19;
+            color: #ffffff;
+            height: 100dvh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .board-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: min(380px, 60dvh);
+            aspect-ratio: 1;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            padding: 8px;
+            background: rgba(30, 41, 59, 0.7);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .tile-slot {
+            aspect-ratio: 1;
+            background: rgba(15, 23, 42, 0.6);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .tile {
+            position: absolute;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.6rem;
+            transition: transform 0.15s cubic-bezier(0.25, 1, 0.5, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        .tile-new { animation: appear 0.18s ease-out forwards; }
+        .tile-merged { animation: pop 0.18s ease-in-out forwards; z-index: 20; }
+
+        @keyframes appear {
+            0% { opacity: 0; transform: var(--tile-pos) scale(0); }
+            100% { opacity: 1; transform: var(--tile-pos) scale(1); }
+        }
+
+        @keyframes pop {
+            0% { transform: var(--tile-pos) scale(1); }
+            50% { transform: var(--tile-pos) scale(1.15); }
+            100% { transform: var(--tile-pos) scale(1); }
+        }
+
+        /* Tile Colors */
+        .tile-2    { background: linear-gradient(135deg, #1e293b, #334155); color: #f8fafc; border: 1px solid #475569; }
+        .tile-4    { background: linear-gradient(135deg, #0f4c81, #1e3a8a); color: #38bdf8; border: 1px solid #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.3); }
+        .tile-8    { background: linear-gradient(135deg, #1e1b4b, #312e81); color: #818cf8; border: 1px solid #6366f1; box-shadow: 0 0 12px rgba(99, 102, 241, 0.4); }
+        .tile-16   { background: linear-gradient(135deg, #4c1d95, #581c87); color: #c084fc; border: 1px solid #c084fc; box-shadow: 0 0 14px rgba(192, 132, 252, 0.4); }
+        .tile-32   { background: linear-gradient(135deg, #831843, #701a75); color: #f472b6; border: 1px solid #f472b6; box-shadow: 0 0 16px rgba(244, 114, 182, 0.5); }
+        .tile-64   { background: linear-gradient(135deg, #9f1239, #881337); color: #fb7185; border: 1px solid #fb7185; box-shadow: 0 0 18px rgba(251, 113, 133, 0.5); }
+        .tile-128  { background: linear-gradient(135deg, #c2410c, #9a3412); color: #fb923c; border: 1px solid #fb923c; font-size: 1.4rem; box-shadow: 0 0 20px rgba(251, 146, 60, 0.6); }
+        .tile-256  { background: linear-gradient(135deg, #b45309, #78350f); color: #fbbf24; border: 1px solid #fbbf24; font-size: 1.4rem; box-shadow: 0 0 22px rgba(251, 191, 36, 0.6); }
+        .tile-512  { background: linear-gradient(135deg, #a16207, #713f12); color: #facc15; border: 1px solid #facc15; font-size: 1.4rem; box-shadow: 0 0 24px rgba(250, 204, 21, 0.7); }
+        .tile-1024 { background: linear-gradient(135deg, #15803d, #14532d); color: #4ade80; border: 1px solid #4ade80; font-size: 1.2rem; box-shadow: 0 0 26px rgba(74, 222, 128, 0.7); }
+        .tile-2048 { background: linear-gradient(135deg, #0e7490, #155e75); color: #22d3ee; border: 1px solid #22d3ee; font-size: 1.2rem; box-shadow: 0 0 30px rgba(34, 211, 238, 0.9); }
+
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+ <!-- Navbar 自動注入位置 -->
+    <div id="navbar-container"></div>
+ 
+    <!-- Header / Scores -->
+    <div class="w-full max-w-md flex items-center justify-between px-1">
+        <div>
+            <h1 class="text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-400 to-cyan-400">
+                2048
+            </h1>
+            <p class="text-[9px] font-semibold tracking-wider text-slate-400 uppercase">CYBER EDITION</p>
+        </div>
+        <div class="flex gap-2">
+            <div class="glass-panel px-3 py-1 rounded-xl text-center min-w-[65px]">
+                <div class="text-[8px] font-bold text-slate-400 uppercase tracking-wider">Score</div>
+                <div id="score" class="text-base font-extrabold text-pink-400">0</div>
+            </div>
+            <div class="glass-panel px-3 py-1 rounded-xl text-center min-w-[65px]">
+                <div class="text-[8px] font-bold text-slate-400 uppercase tracking-wider">Best</div>
+                <div id="best-score" class="text-base font-extrabold text-amber-400">0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls Bar -->
+    <div class="w-full max-w-md grid grid-cols-4 gap-1.5 px-1">
+        <button id="btn-new" class="glass-panel hover:bg-slate-800 text-slate-200 font-bold py-1.5 px-2 rounded-xl transition text-[11px] flex items-center justify-center gap-1 active:scale-95">New</button>
+        <button id="btn-undo" class="glass-panel hover:bg-slate-800 text-slate-200 font-bold py-1.5 px-2 rounded-xl transition text-[11px] flex items-center justify-center gap-1 active:scale-95">Undo</button>
+        <button id="btn-history" class="glass-panel hover:bg-slate-800 text-slate-200 font-bold py-1.5 px-2 rounded-xl transition text-[11px] flex items-center justify-center gap-1 active:scale-95">History</button>
+        <button id="btn-rank" class="glass-panel hover:bg-slate-800 text-slate-200 font-bold py-1.5 px-2 rounded-xl transition text-[11px] flex items-center justify-center gap-1 active:scale-95 text-cyan-400">Rank</button>
+    </div>
+
+    <!-- Board Container -->
+    <div class="board-wrapper">
+        <div id="grid" class="grid-container">
+            <div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div>
+            <div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div>
+            <div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div>
+            <div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div><div class="tile-slot"></div>
+        </div>
+
+        <!-- Game Over Overlay -->
+        <div id="overlay" class="absolute inset-0 bg-slate-950/90 backdrop-blur-md rounded-2xl flex flex-col items-center justify-center hidden z-30 p-4 transition-all">
+            <h2 id="overlay-title" class="text-2xl font-black mb-1 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Game Over!</h2>
+            <p id="final-score-text" class="text-slate-300 text-xs mb-3 font-semibold">Score: <span id="current-end-score" class="text-pink-400 font-bold">0</span></p>
+            
+            <div id="submit-score-box" class="w-full flex flex-col gap-2 mb-3">
+                <input type="text" id="player-name" placeholder="Enter your name (Max 10 chars)" maxlength="10" class="bg-slate-900 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white text-center focus:outline-none focus:border-cyan-400">
+                <button id="btn-submit-score" class="bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold py-1.5 px-4 rounded-xl shadow active:scale-95 transition">Submit to Leaderboard</button>
+            </div>
+
+            <button id="btn-restart" class="bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs font-bold py-2 px-6 rounded-xl shadow-lg shadow-pink-500/25 active:scale-95 transition">
+                Try Again
+            </button>
+        </div>
+
+        <!-- History Modal -->
+        <div id="modal-history" class="absolute inset-0 bg-slate-950/95 backdrop-blur-md rounded-2xl flex flex-col p-4 hidden z-40">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="text-base font-bold text-cyan-400">Game History</h3>
+                <button id="close-history" class="text-slate-400 hover:text-white text-sm font-bold px-2">✕</button>
+            </div>
+            <div id="history-list" class="flex-1 overflow-y-auto custom-scroll flex flex-col gap-1.5 text-xs pr-1"></div>
+        </div>
+
+        <!-- Leaderboard Modal -->
+        <div id="modal-rank" class="absolute inset-0 bg-slate-950/95 backdrop-blur-md rounded-2xl flex flex-col p-4 hidden z-40">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="text-base font-bold text-pink-400">Global Top 100 Leaderboard</h3>
+                <button id="close-rank" class="text-slate-400 hover:text-white text-sm font-bold px-2">✕</button>
+            </div>
+            <div id="rank-list" class="flex-1 overflow-y-auto custom-scroll flex flex-col gap-1.5 text-xs pr-1">
+                <div class="text-center text-slate-500 py-6">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Area (Swipe Control Available Here) -->
+    <div class="w-full max-w-md text-center text-[10px] text-slate-500 font-medium py-4 flex-1 flex items-center justify-center">
+        Swipe anywhere or use <span class="bg-slate-800 text-slate-300 px-1.5 py-0.5 mx-1 rounded border border-slate-700">Arrow Keys</span> to play
+    </div>
+
+    <script>
+        // ==========================================
+        // 🛠️ FIREBASE CONFIGURATION
+        // ==========================================
+        const firebaseConfig = {
+          apiKey: "AIzaSyAAAwcNQ5mDUUR_A27PbGNhu64tytQ7tSE",
+          authDomain: "mini-game-2048.firebaseapp.com",
+          projectId: "mini-game-2048",
+          storageBucket: "mini-game-2048.firebasestorage.app",
+          messagingSenderId: "119779986825",
+          appId: "1:119779986825:web:e1bbc859f068ff882da558",
+          measurementId: "G-F8B9HWR005"
+        };
+
+        let db = null;
+        try {
+            if (firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY") {
+                firebase.initializeApp(firebaseConfig);
+                db = firebase.firestore();
+            }
+        } catch (e) {
+            console.log("Firebase initialization failed");
+        }
+
+        // ==========================================
+        // 🎮 GAME CORE LOGIC
+        // ==========================================
+        const SIZE = 4;
+        let board = [];
+        let tiles = [];
+        let score = 0;
+        let bestScore = parseInt(localStorage.getItem('cyber2048_best') || '0');
+        let previousState = null;
+        let tileIdCounter = 1;
+        let isMoving = false;
+
+        const gridEl = document.getElementById('grid');
+        const scoreEl = document.getElementById('score');
+        const bestScoreEl = document.getElementById('best-score');
+        const overlayEl = document.getElementById('overlay');
+
+        function init() {
+            bestScoreEl.innerText = bestScore;
+            newGame();
+        }
+
+        function newGame() {
+            document.querySelectorAll('.tile').forEach(t => t.remove());
+            board = Array(SIZE).fill(null).map(() => Array(SIZE).fill(null));
+            tiles = [];
+            score = 0;
+            previousState = null;
+            updateScore(0);
+            overlayEl.classList.add('hidden');
+            document.getElementById('submit-score-box').classList.remove('hidden');
+            addRandomTile();
+            addRandomTile();
+            render();
+        }
+
+        function updateScore(val) {
+            score = val;
+            scoreEl.innerText = score;
+            if (score > bestScore) {
+                bestScore = score;
+                bestScoreEl.innerText = bestScore;
+                localStorage.setItem('cyber2048_best', bestScore);
+            }
+        }
+
+        function saveHistoryRecord(finalScore, maxTile) {
+            let history = JSON.parse(localStorage.getItem('cyber2048_history') || '[]');
+            const record = {
+                score: finalScore,
+                maxTile: maxTile,
+                date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            };
+            history.unshift(record);
+            if (history.length > 20) history = history.slice(0, 20);
+            localStorage.setItem('cyber2048_history', JSON.stringify(history));
+        }
+
+        function getMaxTileVal() {
+            let max = 0;
+            for (let r = 0; r < SIZE; r++) {
+                for (let c = 0; c < SIZE; c++) {
+                    if (board[r][c] && board[r][c].val > max) max = board[r][c].val;
+                }
+            }
+            return max;
+        }
+
+        function undo() {
+            if (!previousState || isMoving) return;
+            document.querySelectorAll('.tile').forEach(t => t.remove());
+            tiles = [];
+            board = previousState.board.map(row => row.map(cell => {
+                if (cell) {
+                    const newTile = { ...cell, isNew: false, merged: false };
+                    createTileDOM(newTile);
+                    tiles.push(newTile);
+                    return newTile;
+                }
+                return null;
+            }));
+            updateScore(previousState.score);
+            previousState = null;
+            overlayEl.classList.add('hidden');
+            render();
+        }
+
+        function addRandomTile() {
+            const emptyCells = [];
+            for (let r = 0; r < SIZE; r++) {
+                for (let c = 0; c < SIZE; c++) {
+                    if (!board[r][c]) emptyCells.push({ r, c });
+                }
+            }
+            if (emptyCells.length > 0) {
+                const { r, c } = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+                const val = Math.random() < 0.9 ? 2 : 4;
+                const newTile = { id: tileIdCounter++, val: val, r: r, c: c, isNew: true, merged: false };
+                board[r][c] = newTile;
+                tiles.push(newTile);
+                createTileDOM(newTile);
+            }
+        }
+
+        function createTileDOM(tile) {
+            const el = document.createElement('div');
+            el.id = `tile-${tile.id}`;
+            el.className = `tile tile-${tile.val}`;
+            el.innerText = tile.val;
+            gridEl.appendChild(el);
+            tile.el = el;
+        }
+
+        function getTilePos(r, c) {
+            const containerWidth = gridEl.clientWidth;
+            const gap = 8;
+            const padding = 8;
+            const tileSize = (containerWidth - (padding * 2) - (gap * (SIZE - 1))) / SIZE;
+            const left = padding + c * (tileSize + gap);
+            const top = padding + r * (tileSize + gap);
+            return { left, top, tileSize };
+        }
+
+        function render() {
+            tiles.forEach(tile => {
+                const { left, top, tileSize } = getTilePos(tile.r, tile.c);
+                const el = tile.el;
+                el.style.width = `${tileSize}px`;
+                el.style.height = `${tileSize}px`;
+                const posStr = `translate(${left}px, ${top}px)`;
+                el.style.setProperty('--tile-pos', posStr);
+                el.style.transform = posStr;
+                el.className = `tile tile-${tile.val}`;
+                if (tile.isNew) {
+                    el.classList.add('tile-new');
+                    tile.isNew = false;
+                } else if (tile.merged) {
+                    el.classList.add('tile-merged');
+                    tile.merged = false;
+                }
+            });
+        }
+
+        async function move(dir) {
+            if (isMoving) return;
+            isMoving = true;
+            let moved = false;
+            let earnedScore = 0;
+            const tilesToRemove = [];
+            const tempBoardState = board.map(row => row.map(cell => cell ? { ...cell } : null));
+
+            function processLine(line) {
+                let result = [];
+                for (let i = 0; i < line.length; i++) {
+                    if (!line[i]) continue;
+                    let next = i + 1;
+                    while (next < line.length && !line[next]) next++;
+                    if (next < line.length && line[i].val === line[next].val) {
+                        const targetVal = line[i].val * 2;
+                        earnedScore += targetVal;
+                        const mergedTile = { id: tileIdCounter++, val: targetVal, r: 0, c: 0, isNew: false, merged: true };
+                        line[i].toRemove = true;
+                        line[next].toRemove = true;
+                        tilesToRemove.push(line[i], line[next]);
+                        result.push({ tile: mergedTile, from: [line[i], line[next]] });
+                        i = next;
+                    } else {
+                        result.push({ tile: line[i] });
+                    }
+                }
+                return result;
+            }
+
+            if (dir === 'left') {
+                for (let r = 0; r < SIZE; r++) {
+                    const processed = processLine(board[r]);
+                    for (let c = 0; c < SIZE; c++) {
+                        const item = processed[c];
+                        if (item) {
+                            if (item.from) {
+                                item.from.forEach(t => { t.r = r; t.c = c; });
+                                item.tile.r = r; item.tile.c = c;
+                                board[r][c] = item.tile; tiles.push(item.tile); createTileDOM(item.tile); moved = true;
+                            } else {
+                                if (item.tile.r !== r || item.tile.c !== c) moved = true;
+                                item.tile.r = r; item.tile.c = c; board[r][c] = item.tile;
+                            }
+                        } else {
+                            if (board[r][c]) moved = true;
+                            board[r][c] = null;
+                        }
+                    }
+                }
+            } else if (dir === 'right') {
+                for (let r = 0; r < SIZE; r++) {
+                    const processed = processLine([...board[r]].reverse());
+                    for (let c = 0; c < SIZE; c++) {
+                        const targetC = SIZE - 1 - c;
+                        const item = processed[c];
+                        if (item) {
+                            if (item.from) {
+                                item.from.forEach(t => { t.r = r; t.c = targetC; });
+                                item.tile.r = r; item.tile.c = targetC;
+                                board[r][targetC] = item.tile; tiles.push(item.tile); createTileDOM(item.tile); moved = true;
+                            } else {
+                                if (item.tile.r !== r || item.tile.c !== targetC) moved = true;
+                                item.tile.r = r; item.tile.c = targetC; board[r][targetC] = item.tile;
+                            }
+                        } else {
+                            if (board[r][targetC]) moved = true;
+                            board[r][targetC] = null;
+                        }
+                    }
+                }
+            } else if (dir === 'up') {
+                for (let c = 0; c < SIZE; c++) {
+                    const processed = processLine([board[0][c], board[1][c], board[2][c], board[3][c]]);
+                    for (let r = 0; r < SIZE; r++) {
+                        const item = processed[r];
+                        if (item) {
+                            if (item.from) {
+                                item.from.forEach(t => { t.r = r; t.c = c; });
+                                item.tile.r = r; item.tile.c = c;
+                                board[r][c] = item.tile; tiles.push(item.tile); createTileDOM(item.tile); moved = true;
+                            } else {
+                                if (item.tile.r !== r || item.tile.c !== c) moved = true;
+                                item.tile.r = r; item.tile.c = c; board[r][c] = item.tile;
+                            }
+                        } else {
+                            if (board[r][c]) moved = true;
+                            board[r][c] = null;
+                        }
+                    }
+                }
+            } else if (dir === 'down') {
+                for (let c = 0; c < SIZE; c++) {
+                    const processed = processLine([board[3][c], board[2][c], board[1][c], board[0][c]]);
+                    for (let r = 0; r < SIZE; r++) {
+                        const targetR = SIZE - 1 - r;
+                        const item = processed[r];
+                        if (item) {
+                            if (item.from) {
+                                item.from.forEach(t => { t.r = targetR; t.c = c; });
+                                item.tile.r = targetR; item.tile.c = c;
+                                board[targetR][c] = item.tile; tiles.push(item.tile); createTileDOM(item.tile); moved = true;
+                            } else {
+                                if (item.tile.r !== targetR || item.tile.c !== c) moved = true;
+                                item.tile.r = targetR; item.tile.c = c; board[targetR][c] = item.tile;
+                            }
+                        } else {
+                            if (board[targetR][c]) moved = true;
+                            board[targetR][c] = null;
+                        }
+                    }
+                }
+            }
+
+            if (moved) {
+                previousState = { board: tempBoardState, score: score };
+                render();
+                await new Promise(res => setTimeout(res, 150));
+                tilesToRemove.forEach(t => {
+                    if (t.el) t.el.remove();
+                    tiles = tiles.filter(x => x.id !== t.id);
+                });
+                updateScore(score + earnedScore);
+                addRandomTile();
+                render();
+                checkGameOver();
+            }
+            isMoving = false;
+        }
+
+        function checkGameOver() {
+            for (let r = 0; r < SIZE; r++) {
+                for (let c = 0; c < SIZE; c++) {
+                    if (!board[r][c]) return;
+                }
+            }
+            for (let r = 0; r < SIZE; r++) {
+                for (let c = 0; c < SIZE; c++) {
+                    if (c < SIZE - 1 && board[r][c].val === board[r][c + 1].val) return;
+                    if (r < SIZE - 1 && board[r][c].val === board[r + 1][c].val) return;
+                }
+            }
+            saveHistoryRecord(score, getMaxTileVal());
+            document.getElementById('current-end-score').innerText = score;
+            overlayEl.classList.remove('hidden');
+        }
+
+        // ==========================================
+        // 📊 UI Modals & Data Handling
+        // ==========================================
+        const modalHistory = document.getElementById('modal-history');
+        const modalRank = document.getElementById('modal-rank');
+        const historyListEl = document.getElementById('history-list');
+        const rankListEl = document.getElementById('rank-list');
+
+        document.getElementById('btn-history').addEventListener('click', () => {
+            const history = JSON.parse(localStorage.getItem('cyber2048_history') || '[]');
+            if (history.length === 0) {
+                historyListEl.innerHTML = `<div class="text-center text-slate-500 py-6">No game history yet, play a game now!</div>`;
+            } else {
+                historyListEl.innerHTML = history.map(item => `
+                    <div class="bg-slate-900/80 border border-slate-800 p-2 rounded-xl flex justify-between items-center">
+                        <div>
+                            <div class="text-slate-400 text-[10px]">${item.date}</div>
+                            <div class="text-white font-bold">Max Tile: <span class="text-cyan-400">${item.maxTile}</span></div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-[10px] text-slate-400">Score</div>
+                            <div class="text-pink-400 font-extrabold text-sm">${item.score}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            modalHistory.classList.remove('hidden');
+        });
+
+        document.getElementById('close-history').addEventListener('click', () => modalHistory.classList.add('hidden'));
+
+        document.getElementById('btn-rank').addEventListener('click', async () => {
+            modalRank.classList.remove('hidden');
+            if (!db) {
+                rankListEl.innerHTML = `<div class="text-center text-amber-400 py-4 px-2 text-xs">Please ensure valid Firebase configuration.</div>`;
+                return;
+            }
+            try {
+                rankListEl.innerHTML = `<div class="text-center text-slate-500 py-6">Loading...</div>`;
+                const snapshot = await db.collection('leaderboard').orderBy('score', 'desc').limit(100).get();
+                if (snapshot.empty) {
+                    rankListEl.innerHTML = `<div class="text-center text-slate-500 py-6">No global records found!</div>`;
+                    return;
+                }
+                let html = '';
+                let rank = 1;
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    let badgeColor = "text-slate-300";
+                    if (rank === 1) badgeColor = "text-amber-400 font-black text-sm";
+                    else if (rank === 2) badgeColor = "text-slate-200 font-bold";
+                    else if (rank === 3) badgeColor = "text-amber-600 font-bold";
+
+                    let displayDate = data.date || '';
+                    if (data.date && typeof data.date === 'object' && data.date.seconds) {
+                        displayDate = new Date(data.date.seconds * 1000).toLocaleDateString();
+                    }
+
+                    html += `
+                        <div class="bg-slate-900/80 border border-slate-800 p-2 rounded-xl flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <span class="${badgeColor} w-6 text-center">#${rank}</span>
+                                <div>
+                                    <div class="text-white font-bold text-xs">${escapeHtml(data.name || 'Anonymous')}</div>
+                                    <div class="text-[9px] text-slate-500">${displayDate}</div>
+                                </div>
+                            </div>
+                            <div class="text-pink-400 font-extrabold text-sm">${data.score}</div>
+                        </div>
+                    `;
+                    rank++;
+                });
+                rankListEl.innerHTML = html;
+            } catch (err) {
+                rankListEl.innerHTML = `<div class="text-center text-red-400 py-6">Failed to load leaderboard.</div>`;
+            }
+        });
+
+        document.getElementById('close-rank').addEventListener('click', () => modalRank.classList.add('hidden'));
+
+        document.getElementById('btn-submit-score').addEventListener('click', async () => {
+            const nameInput = document.getElementById('player-name').value.trim() || 'Anonymous';
+            if (!db) {
+                alert("Firebase is not configured!");
+                return;
+            }
+            const btn = document.getElementById('btn-submit-score');
+            btn.innerText = "Submitting...";
+            btn.disabled = true;
+
+            try {
+                await db.collection('leaderboard').add({
+                    name: nameInput,
+                    score: score,
+                    maxTile: getMaxTileVal(),
+                    date: new Date().toLocaleDateString()
+                });
+                alert("Score successfully submitted!");
+                document.getElementById('submit-score-box').classList.add('hidden');
+            } catch (e) {
+                alert("Submission failed, please try again.");
+                btn.innerText = "Submit to Leaderboard";
+                btn.disabled = false;
+            }
+        });
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        // ==========================================
+        // 🕹️ Full-Screen Touch & Keyboard Controls
+        // ==========================================
+        window.addEventListener('keydown', (e) => {
+            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) e.preventDefault();
+            if (e.key === 'ArrowLeft') move('left');
+            if (e.key === 'ArrowRight') move('right');
+            if (e.key === 'ArrowUp') move('up');
+            if (e.key === 'ArrowDown') move('down');
+        });
+
+        let startX = 0, startY = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            if (e.target.closest('button, input, #modal-history, #modal-rank')) return;
+            startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (e) => {
+            if (e.target.closest('button, input, #modal-history, #modal-rank')) return;
+            e.preventDefault();
+        }, { passive: false });
+
+        document.addEventListener('touchend', (e) => {
+            if (!startX || !startY) return;
+            if (e.target.closest('button, input, #modal-history, #modal-rank')) return;
+
+            let diffX = e.changedTouches[0].clientX - startX;
+            let diffY = e.changedTouches[0].clientY - startY;
+
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (Math.abs(diffX) > 30) { if (diffX > 0) move('right'); else move('left'); }
+            } else {
+                if (Math.abs(diffY) > 30) { if (diffY > 0) move('down'); else move('up'); }
+            }
+            startX = 0; startY = 0;
+        }, { passive: true });
+
+        document.getElementById('btn-new').addEventListener('click', newGame);
+        document.getElementById('btn-restart').addEventListener('click', newGame);
+        document.getElementById('btn-undo').addEventListener('click', undo);
+        window.addEventListener('resize', render);
+
+        init();
+
+        // ==========================================
+        // 🌐 Dynamic Navbar Loader
+        // ==========================================
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById('navbar-container');
+            if (!container) return;
+
+            fetch('navbar.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to load navbar');
+                    return response.text();
+                })
+                .then(html => {
+                    container.innerHTML = html;
+
+                    // 綁定手機版漢堡包點擊事件
+                    const navToggle = document.getElementById('navToggle');
+                    const navMenu = document.getElementById('navMenu');
+                    if (navToggle && navMenu) {
+                        navToggle.addEventListener('click', () => {
+                            navMenu.classList.toggle('is-active');
+                        });
+                    }
+
+                    // 自動跟據當前網址高亮對應的 Link
+                    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    navLinks.forEach(link => {
+                        const linkPage = link.getAttribute('href');
+                        if (linkPage === currentPage) {
+                            link.classList.add('active');
+                        }
+                    });
+                })
+                .catch(error => console.error('Error loading navbar:', error));
+        });
+     
+    </script>
+</body>
+</html>
 
