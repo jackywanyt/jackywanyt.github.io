@@ -11,17 +11,25 @@
       <span class="hamburger"></span>
     </button>
 
-    <!-- Horizontal Navigation Links -->
+    <!-- Navigation Menu Wrapper -->
     <div class="nav-menu" id="navMenu">
       <ul class="nav-list">
-
         
         <li class="nav-item">
-          <a href="article.html" class="nav-link">Technology</a>
+          <a href="index.html" class="nav-link">Home</a>
         </li>
 
-         <li class="nav-item">
-          <a href="article.html" class="nav-link">Article</a>
+         <!-- Article Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle">
+            Article
+            <svg class="dropdown-icon" viewBox="0 0 24 24" width="14" height="14">
+              <path fill="none" stroke="currentColor" stroke-width="2" d="M6 9l6 6 6-6"/>
+            </svg>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="technology.html" class="dropdown-item">Technology</a></li>          
+          </ul>
         </li>
         
         <!-- Games Dropdown Menu -->
@@ -33,17 +41,16 @@
             </svg>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="index.html" class="dropdown-item">2048</a></li>
+            <li><a href="index.html" class="dropdown-item">2048</a></li>          
           </ul>
         </li>
 
-       
+        
       </ul>
 
       <!-- CTA Button -->
       <div class="nav-cta">
-        <a href="index.html" class="btn-primary">Home</a>
-        
+        <a href="index.html" class="btn-primary">Get Started</a>
       </div>
     </div>
   </div>
