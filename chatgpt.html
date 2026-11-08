@@ -6,6 +6,10 @@
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9844319997817181"
  crossorigin="anonymous"></script>
 
+         <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,6 +57,12 @@
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300">
 
+<!-- 🌐 Dynamic Navbar Container (與 index.html 一致的寬版容器) -->
+    <header class="w-full max-w-4xl mx-auto px-4 pt-2">
+        <div id="navbar-container"></div>
+    </header>
+
+    
     <!-- Top Reading Progress Bar -->
     <div id="progress-container" class="fixed top-0 left-0 w-full h-1 bg-slate-200 dark:bg-slate-800 z-50">
         <div id="progress-bar" class="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 w-0 transition-all duration-150"></div>
@@ -687,5 +697,47 @@ Return strictly JSON format with the following keys:
             activeBtn.classList.add('bg-blue-600', 'text-white');
         }
     </script>
+
+<!-- 🌐 Dynamic Navbar Loader Handler -->
+
+<script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById('navbar-container');
+            if (!container) return;
+
+            fetch('navbar.html')
+                .then(response => {
+                    if (!response.ok) throw new Error('Failed to load navbar');
+                    return response.text();
+                })
+                .then(html => {
+                    container.innerHTML = html;
+
+                    // 綁定手機版漢堡包點擊事件（修正版）
+                    const navToggle = document.getElementById('navToggle');
+                    const navMenu = document.getElementById('navMenu');
+                    if (navToggle && navMenu) {
+                        navToggle.addEventListener('click', () => {
+                            // 點擊時切換 hidden 狀態，並在手機上展開為 flex
+                            navMenu.classList.toggle('hidden');
+                            navMenu.classList.toggle('flex');
+                        });
+                    }
+
+                    // 自動根據當前網頁檔名高亮對應的 Link
+                    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+                    const navLinks = document.querySelectorAll('.nav-link');
+                    navLinks.forEach(link => {
+                        const linkPage = link.getAttribute('href');
+                        if (linkPage === currentPage) {
+                            link.classList.add('active');
+                        }
+                    });
+                })
+                .catch(error => console.log('Navbar component not loaded yet.'));
+        });
+</script>
+
+    
 </body>
 </html>
