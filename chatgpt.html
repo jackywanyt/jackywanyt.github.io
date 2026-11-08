@@ -1,162 +1,148 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-
     <!-- Google AdSense Auto Ads Code -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9844319997817181"
- crossorigin="anonymous"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9844319997817181" crossorigin="anonymous"></script>
 
-         <!-- Tailwind CSS & Google Fonts -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>How to Use ChatGPT to Automate Daily Workflows: A Step-by-Step Tutorial (2026 Guide)</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8B9HWR005"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#f0f5ff',
-                            100: '#e0ebff',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-F8B9HWR005');
     </script>
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS & Google Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet"> 
+    
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Basic Page Setup & Mobile Viewport Optimization -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b0f19">
+
+    <!-- SEO Optimized Title & Description -->
+    <title>How to Use ChatGPT to Automate Daily Workflows: A Step-by-Step Tutorial (2026 Guide)</title>
+    <meta name="description" content="Learn how to automate daily tasks using ChatGPT, Zapier, and custom prompts. A step-by-step tutorial to streamline emails, data entry, and project workflows.">
+    <meta name="keywords" content="automate daily workflow with ChatGPT, ChatGPT workflow automation tutorial, Zapier ChatGPT integration">
+    <meta name="robots" content="index, follow">
+
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0b0f19;
+            color: #ffffff;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
         }
-        .dark .glass {
+
+        .glass-panel {
             background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-glow {
+            box-shadow: 0 0 50px -10px rgba(34, 211, 238, 0.3);
+        }
+
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+
+        .nav-link.active {
+            color: #22d3ee !important;
+            border-bottom: 2px solid #22d3ee;
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300">
+<body class="custom-scroll">
 
-<!-- 🌐 Dynamic Navbar Container (與 index.html 一致的寬版容器) -->
-    <header class="w-full max-w-4xl mx-auto px-4 pt-2">
+    <!-- Top Reading Progress Bar -->
+    <div id="progress-container" class="fixed top-0 left-0 w-full h-1 bg-slate-800 z-50">
+        <div id="progress-bar" class="h-full bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 w-0 transition-all duration-150"></div>
+    </div>
+
+    <!-- 🌐 Dynamic Navbar Container -->
+    <header class="w-full max-w-4xl mx-auto p-4">
         <div id="navbar-container"></div>
     </header>
 
-    
-    <!-- Top Reading Progress Bar -->
-    <div id="progress-container" class="fixed top-0 left-0 w-full h-1 bg-slate-200 dark:bg-slate-800 z-50">
-        <div id="progress-bar" class="h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-600 w-0 transition-all duration-150"></div>
-    </div>
-
-    <!-- Navigation Bar -->
-    <header class="sticky top-0 z-40 border-b border-slate-200 dark:border-slate-800 glass">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/20">
-                    <i class="fa-solid font-bold fa-bolt text-lg"></i>
-                </div>
-                <span class="font-bold text-lg tracking-tight bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300 bg-clip-text text-transparent">AI Automation Hub</span>
-            </div>
-            
-            <div class="flex items-center space-x-4">
-                <!-- Dark Mode Toggle Button -->
-                <button id="theme-toggle" class="p-2 rounded-lg bg-slate-200/60 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors" aria-label="Toggle Theme">
-                    <i id="theme-toggle-dark-icon" class="fa-solid fa-moon text-sm hidden"></i>
-                    <i id="theme-toggle-light-icon" class="fa-solid fa-sun text-sm"></i>
-                </button>
-                <a href="#conclusion" class="hidden sm:inline-flex items-center justify-center px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-all">
-                    Get Started
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Container -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+    <!-- Main Content Wrapper -->
+    <main class="flex-1 w-full max-w-4xl mx-auto px-4 pb-12 flex flex-col gap-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             <!-- Article Body (8 cols on lg) -->
-            <main class="lg:col-span-8">
-                <!-- Article Header -->
-                <header class="mb-10">
-                    <!-- Category & Tags -->
-                    <div class="flex flex-wrap items-center gap-2 mb-4">
-                        <span class="px-3 py-1 text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40 rounded-full">2026 Guide</span>
-                        <span class="px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-400 bg-slate-200 dark:bg-slate-800 rounded-full">Target: automate daily workflow with ChatGPT</span>
-                    </div>
+            <div class="lg:col-span-8 flex flex-col gap-8">
 
-                    <!-- Article Title -->
-                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.15] mb-6">
-                        How to Use ChatGPT to Automate Daily Workflows: A Step-by-Step Tutorial
-                    </h1>
+                <!-- Article Header Section -->
+                <section class="glass-panel rounded-3xl p-6 md:p-8 relative overflow-hidden hero-glow">
+                    <div class="absolute -top-24 -right-24 w-60 h-60 bg-pink-500/20 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-24 -left-24 w-60 h-60 bg-cyan-500/20 rounded-full blur-3xl"></div>
 
-                    <!-- Subtitle / Meta Description -->
-                    <p class="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed font-normal mb-6">
-                        Learn how to automate daily tasks using ChatGPT, Zapier, and custom prompts. A step-by-step tutorial to streamline emails, data entry, and project workflows.
-                    </p>
-
-                    <!-- Author & Meta bar -->
-                    <div class="flex flex-wrap items-center justify-between border-y border-slate-200 dark:border-slate-800 py-4 gap-4 text-sm text-slate-500 dark:text-slate-400">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-10 h-10 rounded-full bg-slate-300 dark:bg-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-200 font-bold">
-                                AI
-                            </div>
-                            <div>
-                                <p class="font-semibold text-slate-900 dark:text-slate-200">Workflow Ops Team</p>
-                                <p class="text-xs">Updated 7 Nov 2026 • 8 min read</p>
-                            </div>
+                    <div class="relative z-10 flex flex-col gap-4">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-500/30">
+                                2026 Guide
+                            </span>
+                            <span class="px-3 py-1 rounded-full text-xs font-medium text-slate-300 bg-slate-900/80 border border-slate-700/50">
+                                Target: automate daily workflow with ChatGPT
+                            </span>
                         </div>
 
-                        <!-- Secondary Keyword Tags -->
-                        <div class="flex flex-wrap gap-1.5 text-xs">
-                            <span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800/80 rounded border border-slate-200 dark:border-slate-700">#ChatGPT automation</span>
-                            <span class="px-2 py-0.5 bg-slate-100 dark:bg-slate-800/80 rounded border border-slate-200 dark:border-slate-700">#Zapier</span>
+                        <h1 class="text-3xl md:text-4xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-400 to-cyan-400 leading-tight">
+                            How to Use ChatGPT to Automate Daily Workflows: A Step-by-Step Tutorial
+                        </h1>
+
+                        <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                            Learn how to automate daily tasks using ChatGPT, Zapier, and custom prompts. A step-by-step tutorial to streamline emails, data entry, and project workflows.
+                        </p>
+
+                        <div class="flex flex-wrap items-center justify-between border-t border-slate-800 pt-4 gap-4 text-xs text-slate-400">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-cyan-400 font-bold">
+                                    AI
+                                </div>
+                                <div>
+                                    <p class="font-semibold text-white">Workflow Ops Team</p>
+                                    <p class="text-[11px] text-slate-400">Updated 7 Nov 2026 • 8 min read</p>
+                                </div>
+                            </div>
+                            <div class="flex flex-wrap gap-1.5">
+                                <span class="px-2 py-0.5 bg-slate-900 rounded border border-slate-800 text-pink-400">#ChatGPT automation</span>
+                                <span class="px-2 py-0.5 bg-slate-900 rounded border border-slate-800 text-cyan-400">#Zapier</span>
+                            </div>
                         </div>
                     </div>
-                </header>
+                </section>
 
                 <!-- Introduction Content -->
-                <section class="prose dark:prose-invert max-w-none text-slate-700 dark:text-slate-300 leading-relaxed space-y-5 text-base sm:text-lg mb-12 text-justify hyphens-auto">
+                <section class="glass-panel p-6 rounded-2xl flex flex-col gap-4 text-slate-300 text-sm md:text-base leading-relaxed text-justify hyphens-auto">
                     <p>
                         If you find yourself copying and pasting the same responses, drafting similar weekly status reports, or manually organizing customer feedback, you are losing hours every week to tasks that could easily be automated.
                     </p>
                     <p>
-                        While most people use ChatGPT as a basic search box or sporadic writing tool, its real power lies in building <strong class="text-slate-900 dark:text-white font-semibold">hands-free workflow automation systems</strong>.
+                        While most people use ChatGPT as a basic search box or sporadic writing tool, its real power lies in building <strong class="text-cyan-400 font-semibold">hands-free workflow automation systems</strong>.
                     </p>
                     <p>
                         By combining structured prompt frameworks with automated triggers, you can transform ChatGPT from a passive chat window into an active AI workflow assistant. In this tutorial, we will walk step-by-step through setting up automated ChatGPT workflows that execute your daily tasks on autopilot.
                     </p>
 
-                    <!-- Internal Link Callout 1 -->
-                    <div class="my-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-indigo-950/40 border border-blue-200 dark:border-indigo-800/50 flex items-start space-x-4 shadow-sm text-left">
-                        <div class="p-2.5 bg-blue-600 text-white rounded-xl shadow-sm shrink-0">
-                            <i class="fa-solid fa-lightbulb text-lg"></i>
+                    <!-- Internal Link Callout 1 (Opens in New Page) -->
+                    <div class="mt-4 p-4 rounded-xl bg-cyan-950/30 border border-cyan-500/30 flex items-start gap-3">
+                        <div class="p-2 bg-cyan-500/20 text-cyan-400 rounded-lg shrink-0 mt-0.5">
+                            <i class="fa-solid fa-lightbulb text-sm"></i>
                         </div>
                         <div>
-                            <span class="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider block mb-1">Related Reading</span>
-                            <p class="text-sm sm:text-base font-medium text-slate-800 dark:text-slate-200">
+                            <span class="text-xs font-bold text-cyan-400 uppercase tracking-wider block mb-1">Related Reading</span>
+                            <p class="text-xs sm:text-sm text-slate-300">
                                 If you missed our roundup of top zero-cost AI assistants, check out our guide on the 
-                                <a href="aitools.html" class="text-blue-600 dark:text-blue-400 underline hover:text-blue-800 dark:hover:text-blue-300 font-semibold transition-colors">7 free AI tools to increase productivity</a> 
+                                <a href="aitools.html" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline hover:text-cyan-300 font-semibold transition-colors">7 free AI tools to increase productivity</a> 
                                 to see where ChatGPT fits into your overall toolkit.
                             </p>
                         </div>
@@ -164,138 +150,113 @@
                 </section>
 
                 <!-- Section: The 3-Pillar Framework -->
-                <section id="framework" class="scroll-mt-24 mb-14">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4">
-                        The 3-Pillar Framework of AI Automation
-                    </h2>
-                    <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg mb-8 text-justify hyphens-auto">
+                <section id="framework" class="scroll-mt-24 glass-panel p-6 rounded-2xl flex flex-col gap-4">
+                    <h2 class="text-xl md:text-2xl font-black text-white">The 3-Pillar Framework of AI Automation</h2>
+                    <p class="text-slate-300 text-sm md:text-base text-justify hyphens-auto">
                         Before setting up any automation, understand that a successful AI workflow requires three core components running in harmony:
                     </p>
 
-                    <!-- Visual Flow Diagram -->
-                    <div class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm mb-6">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative">
-                            
-                            <!-- Pillar 1 -->
-                            <div class="flex flex-col items-center text-center p-5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/50 hover:border-blue-500 transition-all">
-                                <div class="w-12 h-12 mb-3 rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center text-xl font-bold">
-                                    <i class="fa-solid fa-bolt-lightning"></i>
-                                </div>
-                                <h3 class="font-bold text-slate-900 dark:text-white text-base mb-1">1. Trigger Event</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Incoming event starting the process (e.g., customer inquiry email, Google Sheets row, daily alarm).</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center text-center">
+                            <div class="w-10 h-10 mb-2 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold border border-cyan-500/30">
+                                <i class="fa-solid fa-bolt-lightning"></i>
                             </div>
+                            <h3 class="font-bold text-white text-sm mb-1">1. Trigger Event</h3>
+                            <p class="text-xs text-slate-400">Incoming event starting the process (e.g., customer email, Google Sheets row).</p>
+                        </div>
 
-                            <!-- Connector Arrow 1 (Desktop) -->
-                            <div class="hidden md:flex absolute top-1/2 left-[31%] -translate-y-1/2 text-slate-300 dark:text-slate-600 text-xl">
-                                <i class="fa-solid fa-arrow-right"></i>
+                        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center text-center">
+                            <div class="w-10 h-10 mb-2 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold border border-purple-500/30">
+                                <i class="fa-solid fa-microchip"></i>
                             </div>
+                            <h3 class="font-bold text-white text-sm mb-1">2. System Prompt</h3>
+                            <p class="text-xs text-slate-400">AI processing rules instructing ChatGPT how to transform or classify data.</p>
+                        </div>
 
-                            <!-- Pillar 2 -->
-                            <div class="flex flex-col items-center text-center p-5 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 hover:border-indigo-500 transition-all">
-                                <div class="w-12 h-12 mb-3 rounded-full bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xl font-bold">
-                                    <i class="fa-solid fa-microchip"></i>
-                                </div>
-                                <h3 class="font-bold text-slate-900 dark:text-white text-base mb-1">2. System Prompt</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">AI processing rules instructing ChatGPT exactly how to transform, summarize, or classify data.</p>
+                        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center text-center">
+                            <div class="w-10 h-10 mb-2 rounded-full bg-pink-500/20 text-pink-400 flex items-center justify-center font-bold border border-pink-500/30">
+                                <i class="fa-solid fa-paper-plane"></i>
                             </div>
-
-                            <!-- Connector Arrow 2 (Desktop) -->
-                            <div class="hidden md:flex absolute top-1/2 left-[64%] -translate-y-1/2 text-slate-300 dark:text-slate-600 text-xl">
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </div>
-
-                            <!-- Pillar 3 -->
-                            <div class="flex flex-col items-center text-center p-5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/50 hover:border-emerald-500 transition-all">
-                                <div class="w-12 h-12 mb-3 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xl font-bold">
-                                    <i class="fa-solid fa-paper-plane"></i>
-                                </div>
-                                <h3 class="font-bold text-slate-900 dark:text-white text-base mb-1">3. Output Action</h3>
-                                <p class="text-xs text-slate-500 dark:text-slate-400">Delivering responses directly to the final destination (Gmail draft, Slack post, database update).</p>
-                            </div>
-
+                            <h3 class="font-bold text-white text-sm mb-1">3. Output Action</h3>
+                            <p class="text-xs text-slate-400">Delivering responses directly to the final destination (Gmail draft, Slack post).</p>
                         </div>
                     </div>
                 </section>
 
                 <!-- Step 1: Identify Tasks -->
-                <section id="step1" class="scroll-mt-24 mb-14">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm">01</span>
-                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Identify Tasks Worth Automating</h2>
+                <section id="step1" class="scroll-mt-24 glass-panel p-6 rounded-2xl flex flex-col gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-cyan-500 text-slate-950 font-bold text-xs">01</span>
+                        <h2 class="text-xl md:text-2xl font-black text-white">Identify Tasks Worth Automating</h2>
                     </div>
                     
-                    <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg mb-6 text-justify hyphens-auto">
-                        Not every task should be automated. Tasks that require high-level emotional intelligence, strategic decisions, or complex negotiation should remain human-driven. Focus on tasks that meet these <strong>3 Automation Criteria</strong>:
+                    <p class="text-slate-300 text-sm md:text-base text-justify hyphens-auto">
+                        Not every task should be automated. Focus on tasks that meet these <strong>3 Automation Criteria</strong>:
                     </p>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <!-- Criteria 1 -->
-                        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-md transition-shadow">
-                            <div class="text-blue-600 dark:text-blue-400 text-lg mb-2"><i class="fa-solid fa-arrows-rotate"></i></div>
-                            <h3 class="font-semibold text-slate-900 dark:text-white mb-1">High Frequency</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Happens at least 3–5 times per week in your routine.</p>
+                        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                            <div class="text-cyan-400 text-base mb-2"><i class="fa-solid fa-arrows-rotate"></i></div>
+                            <h3 class="font-semibold text-white text-sm mb-1">High Frequency</h3>
+                            <p class="text-xs text-slate-400">Happens at least 3–5 times per week in your routine.</p>
                         </div>
-                        <!-- Criteria 2 -->
-                        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-md transition-shadow">
-                            <div class="text-indigo-600 dark:text-indigo-400 text-lg mb-2"><i class="fa-solid fa-align-left"></i></div>
-                            <h3 class="font-semibold text-slate-900 dark:text-white mb-1">Structured Inputs</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Uses consistent input formats like emails or form entries.</p>
+                        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                            <div class="text-purple-400 text-base mb-2"><i class="fa-solid fa-align-left"></i></div>
+                            <h3 class="font-semibold text-white text-sm mb-1">Structured Inputs</h3>
+                            <p class="text-xs text-slate-400">Uses consistent input formats like emails or form entries.</p>
                         </div>
-                        <!-- Criteria 3 -->
-                        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:shadow-md transition-shadow">
-                            <div class="text-purple-600 dark:text-purple-400 text-lg mb-2"><i class="fa-solid fa-list-check"></i></div>
-                            <h3 class="font-semibold text-slate-900 dark:text-white mb-1">Predictable Rules</h3>
-                            <p class="text-xs text-slate-500 dark:text-slate-400">Follows clear, repeatable instructions for outputs.</p>
+                        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                            <div class="text-pink-400 text-base mb-2"><i class="fa-solid fa-list-check"></i></div>
+                            <h3 class="font-semibold text-white text-sm mb-1">Predictable Rules</h3>
+                            <p class="text-xs text-slate-400">Follows clear, repeatable instructions for outputs.</p>
                         </div>
                     </div>
                 </section>
 
                 <!-- Step 2: System Prompt Template -->
-                <section id="step2" class="scroll-mt-24 mb-14">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm">02</span>
-                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Master the Master System Prompt Template</h2>
+                <section id="step2" class="scroll-mt-24 glass-panel p-6 rounded-2xl flex flex-col gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-cyan-500 text-slate-950 font-bold text-xs">02</span>
+                        <h2 class="text-xl md:text-2xl font-black text-white">Master the Master System Prompt Template</h2>
                     </div>
 
-                    <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg mb-6 text-justify hyphens-auto">
-                        The secret to reliable AI automation is writing a System Prompt that forces ChatGPT to output consistent, error-free results every time. Use this standardized prompt structure:
+                    <p class="text-slate-300 text-sm md:text-base text-justify hyphens-auto">
+                        The secret to reliable AI automation is writing a System Prompt that forces ChatGPT to output consistent, error-free results every time:
                     </p>
 
-                    <!-- Instruction Legend Box for Highlighted Places -->
-                    <div class="mb-5 p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 flex items-start space-x-3 text-xs sm:text-sm text-amber-900 dark:text-amber-200">
-                        <i class="fa-solid fa-triangle-exclamation text-amber-600 dark:text-amber-400 text-lg shrink-0 mt-0.5"></i>
+                    <!-- Instruction Legend Box -->
+                    <div class="p-4 rounded-xl bg-amber-950/30 border border-amber-500/40 text-xs text-amber-200 flex items-start gap-3">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-400 text-base shrink-0 mt-0.5"></i>
                         <div>
-                            <strong class="font-bold uppercase tracking-wider block mb-1">⚠️ Customization Guide: How to use this template</strong>
+                            <strong class="font-bold uppercase tracking-wider block mb-1">⚠️ Customization Guide</strong>
                             <p class="leading-relaxed">
-                                Highlighted tags like <span class="px-1.5 py-0.5 rounded bg-amber-200 text-amber-900 font-mono font-bold dark:bg-amber-800 dark:text-amber-100 border border-amber-400"><code>{{Trigger.Variable}}</code></span> are <strong>dynamic variables</strong> you map from your trigger app (e.g., Zapier/Make). Highlights like <span class="px-1.5 py-0.5 rounded bg-cyan-200 text-cyan-900 font-mono font-bold dark:bg-cyan-900 dark:text-cyan-100 border border-cyan-400"><code>[Placeholder]</code></span> are <strong>output specifications</strong> you can adapt to your needs.
+                                Tags like <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono font-bold border border-amber-500/40"><code>{{Trigger.Variable}}</code></span> are <strong>dynamic variables</strong> from your trigger app, and <span class="px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono font-bold border border-cyan-500/40"><code>[Placeholder]</code></span> are <strong>output specifications</strong>.
                             </p>
                         </div>
                     </div>
 
-                    <!-- Code Block Component with Visual Highlighting -->
-                    <div class="relative rounded-xl overflow-hidden bg-slate-900 border border-slate-800 shadow-xl">
-                        <!-- Code Header -->
-                        <div class="flex items-center justify-between px-4 py-3 bg-slate-800/80 border-b border-slate-700/60 text-slate-400 text-xs font-mono">
+                    <!-- Code Block Component -->
+                    <div class="relative rounded-xl overflow-hidden bg-slate-950 border border-slate-800 shadow-xl">
+                        <div class="flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800 text-slate-400 text-xs font-mono">
                             <div class="flex items-center space-x-2">
                                 <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
                                 <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
                                 <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
                                 <span class="ml-2 font-sans font-medium text-slate-300">System Prompt Template</span>
                             </div>
-                            <button id="copy-btn" onclick="copyCode()" class="flex items-center space-x-1.5 px-2.5 py-1 rounded bg-slate-700 hover:bg-slate-600 text-slate-200 transition-colors">
+                            <button id="copy-btn" onclick="copyCode()" class="flex items-center space-x-1.5 px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-200 transition-colors">
                                 <i class="fa-regular fa-copy"></i>
                                 <span id="copy-text">Copy Prompt</span>
                             </button>
                         </div>
 
-                        <!-- Code Content with Dynamic Visual Styling -->
-                        <div id="prompt-code" class="p-5 text-sm font-mono text-slate-200 overflow-x-auto leading-relaxed whitespace-pre-wrap">### ROLE & CONTEXT
+                        <div id="prompt-code" class="p-4 sm:p-5 text-xs sm:text-sm font-mono text-slate-200 overflow-x-auto leading-relaxed whitespace-pre-wrap">### ROLE & CONTEXT
 You are an expert Executive Assistant specializing in communications. Your goal is to review incoming customer support messages and draft professional, concise email replies.
 
 ### INPUT DATA
-User Name: <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/50 font-bold" title="Map from Trigger App">{{Trigger.Name}}</span>
-User Query: <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/50 font-bold" title="Map from Trigger App">{{Trigger.Message}}</span>
-Product Category: <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/50 font-bold" title="Map from Trigger App">{{Trigger.Category}}</span>
+User Name: <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/50 font-bold">{{Trigger.Name}}</span>
+User Query: <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/50 font-bold">{{Trigger.Message}}</span>
+Product Category: <span class="px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/50 font-bold">{{Trigger.Category}}</span>
 
 ### RULES & CONSTRAINTS
 1. Tone must be professional, warm, and helpful.
@@ -314,296 +275,174 @@ Return strictly JSON format with the following keys:
                 </section>
 
                 <!-- Step 3: Connect ChatGPT to Daily Apps -->
-                <section id="step3" class="scroll-mt-24 mb-14">
-                    <div class="flex items-center space-x-3 mb-4">
-                        <span class="flex items-center justify-center w-8 h-8 rounded-lg bg-blue-600 text-white font-bold text-sm">03</span>
-                        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Connect ChatGPT to Your Daily Apps (No-Code Integration)</h2>
+                <section id="step3" class="scroll-mt-24 glass-panel p-6 rounded-2xl flex flex-col gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="flex items-center justify-center w-7 h-7 rounded-lg bg-cyan-500 text-slate-950 font-bold text-xs">03</span>
+                        <h2 class="text-xl md:text-2xl font-black text-white">Connect ChatGPT to Your Daily Apps</h2>
                     </div>
 
-                    <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg mb-6 text-justify hyphens-auto">
-                        To run your ChatGPT automations without manual copy-pasting, connect OpenAI’s API or ChatGPT’s connector actions using a no-code integration platform like Zapier or Make.com.
+                    <p class="text-slate-300 text-sm md:text-base text-justify hyphens-auto">
+                        To run your ChatGPT automations without manual copy-pasting, connect OpenAI’s API using a platform like Zapier or Make.com:
                     </p>
 
-                    <!-- Example Workflow Card -->
-                    <div class="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-                        <div class="flex items-center space-x-3 mb-6">
-                            <span class="p-2 bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 rounded-lg">
-                                <i class="fa-solid fa-diagram-project text-lg"></i>
-                            </span>
-                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Example: Automated Lead Qualification & Reply Drafts</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs sm:text-sm">
+                            <span class="w-6 h-6 shrink-0 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center border border-cyan-500/30">1</span>
+                            <div>
+                                <h4 class="font-semibold text-white">Set Up the Trigger</h4>
+                                <p class="text-slate-400 text-xs">Select your trigger app (e.g., Google Forms) and choose the event "New Form Submission".</p>
+                            </div>
                         </div>
 
-                        <p class="text-sm text-slate-600 dark:text-slate-400 mb-6">
-                            Here is how to connect a lead generation form to ChatGPT using Zapier in 4 simple steps:
-                        </p>
-
-                        <!-- Step List -->
-                        <div class="space-y-4">
-                            <div class="flex items-start space-x-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
-                                <span class="w-7 h-7 shrink-0 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center">1</span>
-                                <div>
-                                    <h4 class="font-semibold text-slate-900 dark:text-white text-sm">Set Up the Trigger</h4>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">Select your trigger app (e.g., Typeform or Google Forms) and choose the event <em>"New Form Submission"</em>.</p>
-                                </div>
+                        <div class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs sm:text-sm">
+                            <span class="w-6 h-6 shrink-0 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center border border-cyan-500/30">2</span>
+                            <div>
+                                <h4 class="font-semibold text-white">Add the ChatGPT Action Step</h4>
+                                <p class="text-slate-400 text-xs">Add an action step, select ChatGPT / OpenAI, and authenticate with your API key.</p>
                             </div>
+                        </div>
 
-                            <div class="flex items-start space-x-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
-                                <span class="w-7 h-7 shrink-0 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center">2</span>
-                                <div>
-                                    <h4 class="font-semibold text-slate-900 dark:text-white text-sm">Add the ChatGPT Action Step</h4>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">Add a new action step, search for ChatGPT (or OpenAI), select <em>"Conversation"</em> or <em>"Send Prompt"</em>, and authenticate with your API key.</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start space-x-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
-                                <span class="w-7 h-7 shrink-0 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center">3</span>
-                                <div>
-                                    <h4 class="font-semibold text-slate-900 dark:text-white text-sm">Pass Dynamic Variables</h4>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">Map the form input fields (e.g., <code>Form.Name</code>, <code>Form.Email</code>, <code>Form.Question</code>) directly into your ChatGPT prompt template.</p>
-                                </div>
-                            </div>
-
-                            <div class="flex items-start space-x-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
-                                <span class="w-7 h-7 shrink-0 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center">4</span>
-                                <div>
-                                    <h4 class="font-semibold text-slate-900 dark:text-white text-sm">Define the Output Destination</h4>
-                                    <p class="text-xs text-slate-500 dark:text-slate-400">Add a final action step—such as <em>Gmail Create Draft</em> or <em>Slack Send Channel Message</em>—populated with the response output by ChatGPT.</p>
-                                </div>
+                        <div class="flex items-start space-x-3 p-3.5 rounded-xl bg-slate-900/60 border border-slate-800 text-xs sm:text-sm">
+                            <span class="w-6 h-6 shrink-0 rounded-full bg-cyan-500/20 text-cyan-400 font-bold flex items-center justify-center border border-cyan-500/30">3</span>
+                            <div>
+                                <h4 class="font-semibold text-white">Pass Dynamic Variables</h4>
+                                <p class="text-slate-400 text-xs">Map form input fields directly into your prompt template.</p>
                             </div>
                         </div>
                     </div>
                 </section>
 
                 <!-- Section: Workflow Templates (Tabbed UI) -->
-                <section id="templates" class="scroll-mt-24 mb-14">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4">
-                        3 Ready-to-Use Automated Workflow Templates
-                    </h2>
-                    <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg mb-6">
-                        Jumpstart your automation strategy with these plug-and-play recipes designed for daily productivity.
-                    </p>
+                <section id="templates" class="scroll-mt-24 glass-panel p-6 rounded-2xl flex flex-col gap-4">
+                    <div>
+                        <h2 class="text-xl md:text-2xl font-black text-white mb-1">3 Ready-to-Use Workflow Templates</h2>
+                        <p class="text-slate-300 text-xs sm:text-sm">Jumpstart your automation strategy with plug-and-play recipes.</p>
+                    </div>
 
-                    <!-- Interactive Tabs Container -->
-                    <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-                        <!-- Tab Controls -->
-                        <div class="flex flex-wrap gap-2 border-b border-slate-200 dark:border-slate-800 pb-4 mb-6">
-                            <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 text-white transition-all">
-                                Template 1: Email Classifier
-                            </button>
-                            <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
-                                Template 2: Meeting Notes
-                            </button>
-                            <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn px-4 py-2 rounded-lg text-sm font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 transition-all">
-                                Template 3: Social Generator
-                            </button>
+                    <!-- Interactive Tabs -->
+                    <div class="flex flex-wrap gap-2 border-b border-slate-800 pb-3">
+                        <button onclick="switchTab(1)" id="tab-btn-1" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500 text-slate-950 transition-all">
+                            Template 1: Email Classifier
+                        </button>
+                        <button onclick="switchTab(2)" id="tab-btn-2" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 transition-all">
+                            Template 2: Meeting Notes
+                        </button>
+                        <button onclick="switchTab(3)" id="tab-btn-3" class="tab-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-slate-300 hover:bg-slate-800 transition-all">
+                            Template 3: Social Generator
+                        </button>
+                    </div>
+
+                    <!-- Tab Content 1 -->
+                    <div id="tab-content-1" class="tab-content space-y-2 text-xs sm:text-sm pt-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-white text-sm">Instant Email & Support Classifier</h3>
+                            <span class="px-2 py-0.5 text-[10px] rounded-full bg-cyan-950 text-cyan-400 border border-cyan-500/35">Support</span>
                         </div>
+                        <p class="text-slate-300"><strong>Trigger:</strong> New incoming email labeled "Support".</p>
+                        <p class="text-slate-300"><strong>Action:</strong> Classifies sentiment and drafts a 2-paragraph response in Gmail.</p>
+                    </div>
 
-                        <!-- Tab Content 1 -->
-                        <div id="tab-content-1" class="tab-content space-y-4">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Instant Email & Customer Support Classifier</h3>
-                                <span class="px-2.5 py-1 text-xs rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300 font-medium">Customer Support</span>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-                                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Trigger</span>
-                                    <p class="text-sm font-medium text-slate-800 dark:text-slate-200">New incoming email in Gmail labeled "Support".</p>
-                                </div>
-                                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Prompt</span>
-                                    <p class="text-xs font-mono text-slate-700 dark:text-slate-300">Analyze email content. Classify sentiment (Urgent/General/Feedback). Draft polite 2-paragraph response. Email: {{Email.Body}}</p>
-                                </div>
-                                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Output</span>
-                                    <p class="text-sm font-medium text-slate-800 dark:text-slate-200">Creates a draft in Gmail for your 1-click review.</p>
-                                </div>
-                            </div>
+                    <!-- Tab Content 2 -->
+                    <div id="tab-content-2" class="tab-content hidden space-y-2 text-xs sm:text-sm pt-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-white text-sm">Automatic Meeting Notes to Action Items</h3>
+                            <span class="px-2 py-0.5 text-[10px] rounded-full bg-purple-950 text-purple-400 border border-purple-500/35">Team Ops</span>
                         </div>
+                        <p class="text-slate-300"><strong>Trigger:</strong> Transcript file uploaded to Google Drive.</p>
+                        <p class="text-slate-300"><strong>Action:</strong> Extracts executive summary and action items, posting to Slack.</p>
+                    </div>
 
-                        <!-- Tab Content 2 -->
-                        <div id="tab-content-2" class="tab-content hidden space-y-4">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Automatic Meeting Notes to Action Items</h3>
-                                <span class="px-2.5 py-1 text-xs rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300 font-medium">Team Ops</span>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-                                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Trigger</span>
-                                    <p class="text-sm font-medium text-slate-800 dark:text-slate-200">New transcript file uploaded to Google Drive or recorded via Otter.ai.</p>
-                                </div>
-                                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Prompt</span>
-                                    <p class="text-xs font-mono text-slate-700 dark:text-slate-300">Review transcript. Extract: 1) Executive Summary (3 sentences), 2) Key Decisions Made (bullets), 3) Action Items assigned. Transcript: {{Drive.FileText}}</p>
-                                </div>
-                                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Output</span>
-                                    <p class="text-sm font-medium text-slate-800 dark:text-slate-200">Posts structured summary directly to your team's Slack channel.</p>
-                                </div>
-                            </div>
+                    <!-- Tab Content 3 -->
+                    <div id="tab-content-3" class="tab-content hidden space-y-2 text-xs sm:text-sm pt-1">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="font-bold text-white text-sm">Social Media Post Generator</h3>
+                            <span class="px-2 py-0.5 text-[10px] rounded-full bg-pink-950 text-pink-400 border border-pink-500/35">Marketing</span>
                         </div>
-
-                        <!-- Tab Content 3 -->
-                        <div id="tab-content-3" class="tab-content hidden space-y-4">
-                            <div class="flex items-center justify-between">
-                                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Social Media Post Generator from Article Links</h3>
-                                <span class="px-2.5 py-1 text-xs rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300 font-medium">Marketing</span>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-                                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Trigger</span>
-                                    <p class="text-sm font-medium text-slate-800 dark:text-slate-200">Save a new article link to your Pocket or Notion database.</p>
-                                </div>
-                                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Prompt</span>
-                                    <p class="text-xs font-mono text-slate-700 dark:text-slate-300">Summarize insights into a 3-bullet-point LinkedIn post, including 2 relevant hashtags and a call-to-action question. Article Text: {{Notion.Summary}}</p>
-                                </div>
-                                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-                                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Output</span>
-                                    <p class="text-sm font-medium text-slate-800 dark:text-slate-200">Saves draft social media posts to Google Sheet or Buffer queue.</p>
-                                </div>
-                            </div>
-                        </div>
-
+                        <p class="text-slate-300"><strong>Trigger:</strong> Save a new article link to Notion.</p>
+                        <p class="text-slate-300"><strong>Action:</strong> Summarizes key insights into a LinkedIn post format.</p>
                     </div>
                 </section>
 
                 <!-- Section: Safeguards -->
-                <section id="safeguards" class="scroll-mt-24 mb-14">
-                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-4">
-                        3 Essential Safeguards for AI Automations
-                    </h2>
-                    <p class="text-slate-600 dark:text-slate-300 text-base sm:text-lg mb-6">
-                        While AI automation saves hours of manual work, unmonitored automations can occasionally produce hallucinations or formatting errors. Keep these best practices in mind:
-                    </p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Safeguard 1 -->
-                        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
-                            <div>
-                                <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 flex items-center justify-center mb-4 text-lg">
-                                    <i class="fa-solid fa-user-check"></i>
-                                </div>
-                                <h3 class="font-bold text-slate-900 dark:text-white mb-2">Human-in-the-Loop Review</h3>
-                                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                                    For emails or public posts, set the automation to generate a Draft rather than hitting Send automatically.
-                                </p>
-                            </div>
+                <section id="safeguards" class="scroll-mt-24 glass-panel p-6 rounded-2xl flex flex-col gap-4">
+                    <h2 class="text-xl md:text-2xl font-black text-white">3 Essential Safeguards for AI Automations</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                            <h3 class="font-bold text-white text-sm mb-1">Human-in-the-Loop</h3>
+                            <p class="text-xs text-slate-400">Generate Drafts rather than hitting Send automatically.</p>
                         </div>
-
-                        <!-- Safeguard 2 -->
-                        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
-                            <div>
-                                <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 flex items-center justify-center mb-4 text-lg">
-                                    <i class="fa-solid fa-temperature-quarter"></i>
-                                </div>
-                                <h3 class="font-bold text-slate-900 dark:text-white mb-2">Restrict Response Temperatures</h3>
-                                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                                    In your settings, keep the Temperature parameter around 0.2 to 0.3. Lower values keep outputs predictable and factual.
-                                </p>
-                            </div>
+                        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                            <h3 class="font-bold text-white text-sm mb-1">Low Temperatures</h3>
+                            <p class="text-xs text-slate-400">Keep temperature around 0.2 to 0.3 for factual consistency.</p>
                         </div>
-
-                        <!-- Safeguard 3 -->
-                        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
-                            <div>
-                                <div class="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-4 text-lg">
-                                    <i class="fa-solid fa-lock"></i>
-                                </div>
-                                <h3 class="font-bold text-slate-900 dark:text-white mb-2">Lock Down Output Format</h3>
-                                <p class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                                    Request structured JSON or explicit bullet points to prevent ChatGPT from adding conversational filler text.
-                                </p>
-                            </div>
+                        <div class="p-4 rounded-xl bg-slate-900/60 border border-slate-800">
+                            <h3 class="font-bold text-white text-sm mb-1">Strict JSON Output</h3>
+                            <p class="text-xs text-slate-400">Prevent conversational filler by locking down schema formats.</p>
                         </div>
                     </div>
 
-                    <!-- Internal Link Callout 2 -->
-                    <div class="mt-8 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-purple-50 to-pink-50 dark:from-slate-900 dark:to-purple-950/40 border border-purple-200 dark:border-purple-800/50 flex items-start space-x-4 shadow-sm">
-                        <div class="p-2.5 bg-purple-600 text-white rounded-xl shadow-sm shrink-0">
-                            <i class="fa-solid fa-scale-balanced text-lg"></i>
+                    <!-- Internal Link Callout 2 (Opens in New Page) -->
+                    <div class="mt-2 p-4 rounded-xl bg-purple-950/30 border border-purple-500/30 flex items-start gap-3">
+                        <div class="p-2 bg-purple-500/20 text-purple-400 rounded-lg shrink-0 mt-0.5">
+                            <i class="fa-solid fa-scale-balanced text-sm"></i>
                         </div>
                         <div>
-                            <span class="text-xs font-bold text-purple-600 dark:text-purple-400 uppercase tracking-wider block mb-1">Model Comparison</span>
-
-                            <p class="text-sm text-purple-900 dark:text-purple-200">
-  Wondering if ChatGPT is still the best model for your automated workflows compared to alternatives like Claude or Gemini? Read our comprehensive <span class="font-semibold text-purple-950 dark:text-purple-100">ChatGPT vs. Claude vs. Gemini AI comparison guide</span> (coming soon) for a full breakdown.
-</p>
-                          <!--  <p class="text-sm sm:text-base font-medium text-slate-800 dark:text-slate-200">
+                            <span class="text-xs font-bold text-purple-400 uppercase tracking-wider block mb-1">Model Comparison</span>
+                            <p class="text-xs sm:text-sm text-slate-300">
                                 Wondering if ChatGPT is still the best model for your automated workflows compared to alternatives like Claude or Gemini? Read our comprehensive 
-                                <a href="#" class="text-purple-600 dark:text-purple-400 underline hover:text-purple-800 dark:hover:text-purple-300 font-semibold transition-colors">ChatGPT vs. Claude vs. Gemini AI comparison guide</a> 
-                                for a full breakdown.
-                            </p> -->
-                            
+                                <span class="font-semibold text-purple-300">ChatGPT vs. Claude vs. Gemini AI comparison guide</span> (coming soon) for a full breakdown.
+                            </p>
                         </div>
                     </div>
                 </section>
 
                 <!-- Next Steps / Conclusion -->
-                <section id="conclusion" class="scroll-mt-24 p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-slate-900 to-indigo-950 text-white shadow-xl">
-                    <h2 class="text-2xl sm:text-3xl font-extrabold mb-4 text-white">
-                        Next Steps: Start with One Workflow Today
-                    </h2>
-                    <p class="text-slate-300 text-base sm:text-lg mb-6 leading-relaxed">
-                        Do not attempt to automate all your daily tasks at once. Select one repetitive task you perform every day—such as writing meeting recaps or drafting customer replies—and set up a basic 3-step automation today.
+                <section id="conclusion" class="scroll-mt-24 glass-panel p-6 md:p-8 rounded-3xl border border-cyan-500/30 bg-gradient-to-br from-slate-900 to-cyan-950/40 flex flex-col gap-4">
+                    <h2 class="text-xl md:text-2xl font-black text-white">Next Steps: Start with One Workflow Today</h2>
+                    <p class="text-slate-300 text-sm md:text-base leading-relaxed">
+                        Select one repetitive task you perform every day—such as writing meeting recaps or drafting customer replies—and set up a basic 3-step automation today.
                     </p>
-                    <p class="text-slate-300 text-base sm:text-lg mb-8 leading-relaxed">
-                        Once you experience the time saved by a single automated pipeline, you can expand to more advanced integrations across your entire toolstack.
-                    </p>
-
-                    <div class="flex flex-wrap gap-4">
-                        <a href="#step2" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 font-semibold text-white shadow-lg transition-all text-sm sm:text-base">
+                    <div class="flex flex-wrap gap-3 pt-1">
+                        <a href="#step2" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 font-bold text-white text-xs sm:text-sm shadow-lg shadow-cyan-500/20 transition-all">
                             Copy Prompt Template
                         </a>
-                        <a href="#templates" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 font-semibold text-slate-200 border border-slate-700 transition-all text-sm sm:text-base">
+                        <a href="#templates" class="px-5 py-2.5 rounded-xl glass-panel hover:bg-slate-800 font-bold text-slate-200 text-xs sm:text-sm transition-all">
                             View Workflows
                         </a>
                     </div>
                 </section>
 
-            </main>
+            </div>
 
             <!-- Sidebar (4 cols on lg) -->
             <aside class="hidden lg:block lg:col-span-4">
-                <div class="sticky top-24 space-y-6">
+                <div class="sticky top-6 space-y-6">
                     
                     <!-- Table of Contents Widget -->
-                    <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-                        <h3 class="text-sm font-bold text-slate-900 dark:text-white uppercase tracking-wider mb-4 flex items-center space-x-2">
-                            <i class="fa-solid fa-list-ul text-blue-500"></i>
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <h3 class="text-xs font-bold text-cyan-400 uppercase tracking-wider mb-4 flex items-center space-x-2">
+                            <i class="fa-solid fa-list-ul"></i>
                             <span>Table of Contents</span>
                         </h3>
-                        <nav class="space-y-2 text-sm">
-                            <a href="#framework" class="toc-link block text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1">
-                                3-Pillar Framework
-                            </a>
-                            <a href="#step1" class="toc-link block text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1">
-                                Step 1: Identify Tasks
-                            </a>
-                            <a href="#step2" class="toc-link block text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1">
-                                Step 2: System Prompt Template
-                            </a>
-                            <a href="#step3" class="toc-link block text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1">
-                                Step 3: No-Code Integration
-                            </a>
-                            <a href="#templates" class="toc-link block text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1">
-                                3 Ready-to-Use Templates
-                            </a>
-                            <a href="#safeguards" class="toc-link block text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1">
-                                Essential Safeguards
-                            </a>
-                            <a href="#conclusion" class="toc-link block text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors py-1">
-                                Next Steps
-                            </a>
+                        <nav class="space-y-2 text-xs">
+                            <a href="#framework" class="block text-slate-300 hover:text-cyan-400 transition-colors py-1">3-Pillar Framework</a>
+                            <a href="#step1" class="block text-slate-300 hover:text-cyan-400 transition-colors py-1">Step 1: Identify Tasks</a>
+                            <a href="#step2" class="block text-slate-300 hover:text-cyan-400 transition-colors py-1">Step 2: System Prompt Template</a>
+                            <a href="#step3" class="block text-slate-300 hover:text-cyan-400 transition-colors py-1">Step 3: No-Code Integration</a>
+                            <a href="#templates" class="block text-slate-300 hover:text-cyan-400 transition-colors py-1">3 Ready-to-Use Templates</a>
+                            <a href="#safeguards" class="block text-slate-300 hover:text-cyan-400 transition-colors py-1">Essential Safeguards</a>
+                            <a href="#conclusion" class="block text-slate-300 hover:text-cyan-400 transition-colors py-1">Next Steps</a>
                         </nav>
                     </div>
 
                     <!-- Newsletter / Share Box -->
-                    <div class="p-6 rounded-2xl bg-gradient-to-br from-slate-100 to-blue-50 dark:from-slate-900 dark:to-slate-800/80 border border-slate-200 dark:border-slate-800">
-                        <h4 class="font-bold text-slate-900 dark:text-white mb-2">Automate Your Productivity</h4>
-                        <p class="text-xs text-slate-600 dark:text-slate-400 mb-4">Get weekly AI prompt frameworks and automation recipes delivered straight to your inbox.</p>
+                    <div class="glass-panel p-6 rounded-2xl">
+                        <h4 class="font-bold text-white text-sm mb-1">Automate Your Productivity</h4>
+                        <p class="text-xs text-slate-400 mb-4">Get weekly AI prompt frameworks and automation recipes delivered straight to your inbox.</p>
                         <form onsubmit="event.preventDefault(); alert('Subscribed successfully!');" class="space-y-2">
-                            <input type="email" placeholder="Enter your email" required class="w-full px-3 py-2 rounded-lg text-xs bg-white dark:bg-slate-950 border border-slate-300 dark:border-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-                            <button type="submit" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg text-xs transition-colors">
+                            <input type="email" placeholder="Enter your email" required class="w-full px-3 py-2 rounded-lg text-xs bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-cyan-500">
+                            <button type="submit" class="w-full py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold rounded-lg text-xs transition-colors shadow-lg shadow-cyan-500/20">
                                 Subscribe Free
                             </button>
                         </form>
@@ -613,13 +452,11 @@ Return strictly JSON format with the following keys:
             </aside>
 
         </div>
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="mt-20 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 dark:text-slate-400">
-            <p>© 2026 AI Automation Hub. All rights reserved. Designed for workflow efficiency.</p>
-        </div>
+    <footer class="w-full border-t border-slate-800/80 py-6 text-center text-xs text-slate-500 mt-12">
+        <p>© 2026 AI Automation Hub. Built with GitHub Pages & Firebase.</p>
     </footer>
 
     <!-- JavaScript Logic -->
@@ -632,36 +469,9 @@ Return strictly JSON format with the following keys:
             document.getElementById("progress-bar").style.width = scrolled + "%";
         };
 
-        // Dark/Light Theme Toggle
-        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-        const themeToggleBtn = document.getElementById('theme-toggle');
-
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            document.documentElement.classList.add('dark');
-            themeToggleDarkIcon.classList.remove('hidden');
-            themeToggleLightIcon.classList.add('hidden');
-        } else {
-            themeToggleDarkIcon.classList.add('hidden');
-            themeToggleLightIcon.classList.remove('hidden');
-        }
-
-        themeToggleBtn.addEventListener('click', function() {
-            themeToggleDarkIcon.classList.toggle('hidden');
-            themeToggleLightIcon.classList.toggle('hidden');
-
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-            } else {
-                document.documentElement.classList.add('dark');
-            }
-        });
-
         // Copy Code Functionality
         function copyCode() {
             const codeText = document.getElementById('prompt-code').innerText;
-            
-            // Fallback copy execution
             const textArea = document.createElement("textarea");
             textArea.value = codeText;
             document.body.appendChild(textArea);
@@ -678,29 +488,24 @@ Return strictly JSON format with the following keys:
 
         // Tab Switching for Workflow Templates
         function switchTab(tabIndex) {
-            // Hide all tab contents
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.add('hidden');
             });
-            // Reset all buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('bg-blue-600', 'text-white');
-                btn.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
+                btn.classList.remove('bg-cyan-500', 'text-slate-950');
+                btn.classList.add('bg-slate-900', 'text-slate-300');
             });
 
-            // Show selected tab content
             document.getElementById(`tab-content-${tabIndex}`).classList.remove('hidden');
 
-            // Style selected tab button
             const activeBtn = document.getElementById(`tab-btn-${tabIndex}`);
-            activeBtn.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-600', 'dark:text-slate-300');
-            activeBtn.classList.add('bg-blue-600', 'text-white');
+            activeBtn.classList.remove('bg-slate-900', 'text-slate-300');
+            activeBtn.classList.add('bg-cyan-500', 'text-slate-950');
         }
     </script>
 
-<!-- 🌐 Dynamic Navbar Loader Handler -->
-
-<script>
+    <!-- 🌐 Dynamic Navbar Loader Handler -->
+    <script>
         document.addEventListener("DOMContentLoaded", () => {
             const container = document.getElementById('navbar-container');
             if (!container) return;
@@ -713,12 +518,11 @@ Return strictly JSON format with the following keys:
                 .then(html => {
                     container.innerHTML = html;
 
-                    // 綁定手機版漢堡包點擊事件（修正版）
+                    // 綁定手機版漢堡包點擊事件
                     const navToggle = document.getElementById('navToggle');
                     const navMenu = document.getElementById('navMenu');
                     if (navToggle && navMenu) {
                         navToggle.addEventListener('click', () => {
-                            // 點擊時切換 hidden 狀態，並在手機上展開為 flex
                             navMenu.classList.toggle('hidden');
                             navMenu.classList.toggle('flex');
                         });
@@ -736,8 +540,7 @@ Return strictly JSON format with the following keys:
                 })
                 .catch(error => console.log('Navbar component not loaded yet.'));
         });
-</script>
-
+    </script>
     
 </body>
 </html>
