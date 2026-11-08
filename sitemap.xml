@@ -2,20 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
+    <loc>https://jackywanyt.github.io/aicompare.html</loc>
+    <lastmod>2026-11-08</lastmod>
+  </url> 
+     
+    <url>
     <loc>https://jackywanyt.github.io/chatgpt.html</loc>
-    <lastmod>2026-11-07</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://jackywanyt.github.io/index.html</loc>
-    <lastmod>2026-11-06</lastmod>
-  </url>
+    <lastmod>2026-11-08</lastmod>
+  </url>   
+    
   <url>
     <loc>https://jackywanyt.github.io/aitools.html</loc>
-    <lastmod>2026-11-07</lastmod>
+    <lastmod>2026-11-08</lastmod>
   </url>
-  <url>
+
+   <url>
     <loc>https://jackywanyt.github.io/article.html</loc>
-    <lastmod>2026-11-06</lastmod>
+    <lastmod>2026-11-08</lastmod>
   </url>
+
+   <url>
+    <loc>https://jackywanyt.github.io/2048.html</loc>
+    <lastmod>2026-11-08</lastmod>
+  </url>
+      
+  <url>
+    <loc>https://jackywanyt.github.io/index.html</loc>
+    <lastmod>2026-11-08</lastmod>
+  </url>
+    
 </urlset>
