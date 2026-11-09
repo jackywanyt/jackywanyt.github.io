@@ -14,15 +14,10 @@
       gtag('config', 'G-F8B9HWR005');
     </script>
 
-
     <!-- Tailwind CSS & Google Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet"> 
-    
-    <!--  style.css 的位置
-<link rel="stylesheet" href="css/style.css">  -->
 
-    
     <!-- Basic Page Setup & Mobile Viewport Optimization -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,8 +25,8 @@
 
     <!-- SEO Optimized Title & Description for Portal Home Page -->
     <title>Cyber Arcade | Play Free Cyberpunk Web Games & Global Leaderboards</title>
-    <meta name="description" content="Welcome to Cyber Arcade! Play free online cyberpunk-themed browser games including Cyber 2048. Challenge global top 100 leaderboards and track your game scores online.">
-    <meta name="keywords" content="cyberpunk games, free web games, online puzzle games, Cyber 2048, 2048 online, global leaderboard games, HTML5 browser games, play free games">
+    <meta name="description" content="Welcome to Cyber Arcade! Play free online cyberpunk-themed browser games including Cyber 2048 and Cyber Runner. Challenge global top 100 leaderboards and track your game scores online.">
+    <meta name="keywords" content="cyberpunk games, free web games, online puzzle games, Cyber 2048, Cyber Runner, global leaderboard games, HTML5 browser games, play free games">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://jackywanyt.github.io/">
 
@@ -51,7 +46,6 @@
     <meta property="og:description" content="Explore cool cyberpunk web games, challenge global leaderboards, and beat high scores online for free!">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-
 
     <style>
         body {
@@ -108,9 +102,13 @@
                 <p class="text-slate-300 max-w-xl text-sm md:text-base">
                     Play futuristic, lightweight browser games directly in your browser. No download required, compete with players worldwide on live leaderboards.
                 </p>
-                <div class="flex gap-4 mt-2">
+                <!-- 🎮 Hero Action Buttons -->
+                <div class="flex flex-wrap gap-4 mt-2 justify-center">
                     <a href="2048.html" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold py-3 px-8 rounded-xl shadow-lg shadow-cyan-500/20 transition transform active:scale-95 flex items-center gap-2">
                         🎮 Play Cyber 2048
+                    </a>
+                    <a href="runner.html" target="_blank" rel="noopener noreferrer" class="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-400 hover:to-purple-500 text-white font-extrabold py-3 px-8 rounded-xl shadow-lg shadow-pink-500/20 transition transform active:scale-95 flex items-center gap-2">
+                        🏃 Play Cyber Runner
                     </a>
                 </div>
             </div>
@@ -147,25 +145,23 @@
                     </div>
                 </div>
 
-                <!-- Game Card 2: Coming Soon Placeholder -->
-                <div class="glass-panel rounded-2xl p-6 flex flex-col justify-between opacity-60 relative overflow-hidden">
-                    <div class="absolute inset-0 bg-slate-950/40 backdrop-blur-[2px] flex items-center justify-center z-10">
-                        <span class="bg-slate-900 border border-slate-700 text-slate-300 font-bold text-xs px-4 py-1.5 rounded-full">
-                            ⚡ Coming Soon
-                        </span>
-                    </div>
+                <!-- Game Card 2: Cyber Runner (Active) -->
+                <div class="glass-panel rounded-2xl p-6 flex flex-col justify-between hover:border-pink-500/40 transition group">
                     <div>
                         <div class="flex items-center justify-between mb-3">
                             <span class="text-xs font-bold text-purple-400 bg-purple-950/50 px-2.5 py-0.5 rounded-lg border border-purple-500/30">ARCADE</span>
+                            <span class="text-[10px] text-slate-400">Action & Reflex</span>
                         </div>
-                        <h3 class="text-xl font-extrabold text-white mb-2">Cyber Runner</h3>
+                        <h3 class="text-xl font-extrabold text-white group-hover:text-pink-400 transition mb-2">Cyber Runner</h3>
                         <p class="text-slate-400 text-xs leading-relaxed mb-4">
-                            Fast-paced endless obstacle game in neon city settings. New game mode currently under active development.
+                            Fast-paced endless obstacle runner set in a neon cyberpunk city. Test your reflexes, dodge barriers, and set new high scores!
                         </p>
                     </div>
                     <div class="flex items-center justify-between pt-4 border-t border-slate-800">
-                        <span class="text-xs text-slate-500 font-semibold">In Development</span>
-                        <span class="text-xs text-slate-500 font-bold">Soon</span>
+                        <span class="text-xs text-pink-400 font-semibold">Now Available</span>
+                        <a href="runner.html" target="_blank" rel="noopener noreferrer" class="glass-panel hover:bg-slate-800 text-white font-bold text-xs py-2 px-4 rounded-xl transition">
+                            Play Now →
+                        </a>
                     </div>
                 </div>
 
@@ -198,46 +194,8 @@
         <p>© 2026 Cyber Arcade. Built with GitHub Pages & Firebase.</p>
     </footer>
 
-  <!-- 🌐 Dynamic Navbar Loader Handler -->
-
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const container = document.getElementById('navbar-container');
-            if (!container) return;
-
-            fetch('navbar.html')
-                .then(response => {
-                    if (!response.ok) throw new Error('Failed to load navbar');
-                    return response.text();
-                })
-                .then(html => {
-                    container.innerHTML = html;
-
-                    // 綁定手機版漢堡包點擊事件（修正版）
-                    const navToggle = document.getElementById('navToggle');
-                    const navMenu = document.getElementById('navMenu');
-                    if (navToggle && navMenu) {
-                        navToggle.addEventListener('click', () => {
-                            // 點擊時切換 hidden 狀態，並在手機上展開為 flex
-                            navMenu.classList.toggle('hidden');
-                            navMenu.classList.toggle('flex');
-                        });
-                    }
-
-                    // 自動根據當前網頁檔名高亮對應的 Link
-                    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-                    const navLinks = document.querySelectorAll('.nav-link');
-                    navLinks.forEach(link => {
-                        const linkPage = link.getAttribute('href');
-                        if (linkPage === currentPage) {
-                            link.classList.add('active');
-                        }
-                    });
-                })
-                .catch(error => console.log('Navbar component not loaded yet.'));
-        });
-
-</script>
+    <!-- 🌐 Dynamic Navbar Loader Handler -->
+    <script src="js/main.js"></script>
     
 </body>
 </html>
