@@ -183,7 +183,7 @@
         }
 
         // ==========================================
-        // 🎮 RUNNER GAME CORE LOGIC (Square 500x500 + Delta Time)
+        // 🎮 RUNNER GAME CORE LOGIC
         // ==========================================
         const canvas = document.getElementById("gameCanvas");
         const ctx = canvas.getContext("2d");
@@ -200,7 +200,7 @@
         let gameOver = false;
         
         let lastTime = 0;
-        let obstacleTimer = 0; // 改為累計真實秒數 (Seconds)
+        let obstacleTimer = 0;
 
         const groundY = 380;
 
@@ -219,8 +219,12 @@
         let particles = [];
         let gameSpeed = 1.6;
 
-        // Keyboard controls
+        // 🛡️ 修正：鍵盤監聽（若正在輸入名字，忽略遊戲控制鍵）[cite: 4]
         window.addEventListener("keydown", (e) => {
+            if (document.activeElement && document.activeElement.tagName === 'INPUT') {
+                return; // 如果在輸入框打字，不觸發遊戲動作
+            }
+
             if (e.code === "Space" || e.code === "ArrowUp") {
                 e.preventDefault();
                 triggerJumpOrStart();
@@ -230,9 +234,17 @@
             }
         });
 
-        // Click / Tap anywhere on the browser window
+        // 🛡️ 修正：點擊監聽（結算畫面點擊背景時不誤觸重置）[cite: 4]
         document.addEventListener("click", (e) => {
             if (e.target.closest('button, input, #modal-history, #modal-rank, header')) return;
+
+            if (gameOver && e.target.closest('#overlay')) {
+                if (e.target.closest('#btn-try-again')) {
+                    resetGame();
+                }
+                return;
+            }
+
             triggerJumpOrStart();
         });
 
@@ -307,7 +319,6 @@
 
             gameSpeed = 1.6 + Math.floor(currentScoreInt / 60) * 0.15;
 
-            // 玩家物理運算
             player.vy += player.gravity * dt;
             player.y += player.vy * dt;
 
@@ -317,9 +328,8 @@
                 player.grounded = true;
             }
 
-            // 【已修正】障礙物生成計時器：使用真實秒數 (deltaTime)
             obstacleTimer += deltaTime;
-            let spawnInterval = Math.max(1.5, 2.8 - Math.floor(currentScoreInt / 50) * 0.1); // 單位：秒 (每 1.5 ~ 2.8 秒生成一個)
+            let spawnInterval = Math.max(1.5, 2.8 - Math.floor(currentScoreInt / 50) * 0.1);
             
             if (obstacleTimer >= spawnInterval) {
                 obstacleTimer = 0;
@@ -333,7 +343,6 @@
                 });
             }
 
-            // 更新障礙物位置
             for (let i = obstacles.length - 1; i >= 0; i--) {
                 obstacles[i].x -= gameSpeed * dt;
 
@@ -351,7 +360,6 @@
                 }
             }
 
-            // 更新粒子特效
             for (let i = particles.length - 1; i >= 0; i--) {
                 particles[i].x += particles[i].vx * dt;
                 particles[i].y += particles[i].vy * dt;
@@ -380,7 +388,6 @@
             ctx.fillStyle = "#080c14";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // 背景網格線
             ctx.strokeStyle = "rgba(0, 240, 255, 0.05)";
             ctx.lineWidth = 1;
             for (let i = 0; i < canvas.width; i += 40) {
@@ -390,7 +397,6 @@
                 ctx.stroke();
             }
 
-            // 地面線條
             ctx.strokeStyle = "#ff007f";
             ctx.shadowBlur = 12;
             ctx.shadowColor = "#ff007f";
@@ -401,14 +407,12 @@
             ctx.stroke();
             ctx.shadowBlur = 0;
 
-            // 玩家
             ctx.fillStyle = "#00f0ff";
             ctx.shadowBlur = 15;
             ctx.shadowColor = "#00f0ff";
             ctx.fillRect(player.x, player.y, player.width, player.height);
             ctx.shadowBlur = 0;
 
-            // 障礙物
             obstacles.forEach(obs => {
                 ctx.fillStyle = obs.color;
                 ctx.shadowBlur = 12;
@@ -417,7 +421,6 @@
                 ctx.shadowBlur = 0;
             });
 
-            // 粒子
             particles.forEach(p => {
                 ctx.fillStyle = `rgba(0, 240, 255, ${p.alpha})`;
                 ctx.fillRect(p.x, p.y, 4, 4);
@@ -438,17 +441,16 @@
             }
         }
 
-        // 結合 Delta Time 的遊戲主迴圈
         function loop(timestamp) {
             if (!gameRunning) return;
 
-            const deltaTime = (timestamp - lastTime) / 1000; // 實際經過秒數
+            const deltaTime = (timestamp - lastTime) / 1000;
             lastTime = timestamp;
 
             const cappedDelta = Math.min(deltaTime, 0.1);
-            const dt = cappedDelta * 60; // 60 FPS 基準倍率
+            const dt = cappedDelta * 60;
 
-            update(dt, cappedDelta); // 傳入 dt 與真實秒數 cappedDelta
+            update(dt, cappedDelta);
             draw();
 
             if (gameRunning) {
